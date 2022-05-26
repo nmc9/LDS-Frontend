@@ -13,7 +13,7 @@ const CreateEvent = ({ route, navigation }) => {
           setExample(data);
         }).catch((error) => {
         })
-    }, [])
+    }, []) 
   return (
     <View>
     <Text>Hello, {route.params.user?.name}. You are {example?.name} </Text>
