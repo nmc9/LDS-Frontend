@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import { StyleSheet,Text,View,Button,TextInput } from 'react-native';
+import { StyleSheet,Text,View,Button,TextInput,Pressable } from 'react-native';
+import appStyles from '../appStyles';
+import AppButton from "../components/AppButton";
+import AppInput from "../components/AppInput";
 
 const Register = ({ route, navigation }) => {
 
@@ -7,7 +10,10 @@ const Register = ({ route, navigation }) => {
   const [password, onChangePassword] = useState("");
   const [email, onChangeEmail] = useState("");
 
+  const [usernameError,onChangeUsernameError] = useState(null)
+
   const onClear = () => {
+    console.log("clear")
     onChangeUsername("")
     onChangePassword("")
     onChangeEmail("")
@@ -25,80 +31,84 @@ const Register = ({ route, navigation }) => {
       //Take this data and store it as the user token
       console.log(data);
     }).catch((error) => {
-      console.log(error)
+      onChangeUsernameError(error.response.data.errors.name)
     })
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Username:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeUsername}
-        value={username}
-        placeholder="Username"
-      />
+    <View style={registerStyles.container}>
 
-      <Text style={styles.label}>Email:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeEmail}
-        value={email}
-        placeholder="Email"
-      />
+    <AppInput 
+    error={usernameError}
+    onChangeText={onChangeUsername}
+    value={username}
+    placeholder="Username"
+    ></AppInput>
 
-      <Text style={styles.label}>Password:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangePassword}
-        value={password}
-        placeholder="Password"
-      />
+    <AppInput error="There was an error"
+    onChangeText={onChangeEmail}
+    value={email}
+    placeholder="Email"
+    textContentType="emailAddress"
+    autoComplete="email"
+    keyboardType="email-address"
+    ></AppInput>
 
 
+    <AppInput error="There was an error"
+    onChangeText={onChangePassword}
+    value={password}
+    placeholder="Password"
+    autoComplete="password-new"
+    secureTextEntry={true}
+    textContentType="newPassword"
+    ></AppInput>
 
-      <View style={styles.buttonHolder}>
-        <Button
-                onPress={onClear}
 
-        title="Clear"
-        ></Button>  
-        <Button
-        onPress={onSubmit}
-        title="Register"
-        ></Button>  
-      </View>
+
+    <View style={registerStyles.buttonHolder}>
+    <AppButton content="Clear" onPress={onClear}>
+    </AppButton>
+    <AppButton content="Register" onPress={onSubmit}>
+    </AppButton>
+
+
+
+    </View>
     </View>
     );
 }
 
-const styles = StyleSheet.create({
+const registerStyles = StyleSheet.create({
   container: {
     flex: 1,
+    // maxWidth: 400,
     // padding: 300,
-    backgroundColor: "pink",
-    alignItems:'stretch',
+    backgroundColor: "lightgrey",
+    alignItems:'left',
     justifyContent:'center'
   },
 
   label:{
-    paddingLeft:10,
+    paddingTop:10,
+    paddingLeft:20,
     alignSelf:'flex-start',
-    fontSize: 18,
+    fontSize: 16,
   },
 
   buttonHolder:{
-    padding: 10,
+    padding: 15,
     flexDirection:'row',
-    justifyContent:'space-evenly'
+    flexWrap: "wrap",        // backgroundColor: "green",
+
+    paddingTop:0,
+
+    paddingBottom:0,
   },
 
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
+
+
+  
 })
 
 export default Register;
