@@ -7,7 +7,7 @@ const AppInput = (props) => {
 
 return <View style={appStyles.appInputWrapper}>
 <TextInput
-style={props.error ? appStyles.appInputWithError : appStyles.appInput}
+style={props.error && props.error.length ? appStyles.appInputWithError : appStyles.appInput}
 onChangeText={ props.onChangeText}
 value={props.value}
 placeholder={props.placeholder}
@@ -15,8 +15,9 @@ textContentType={props.textContentType}
 autoComplete={props.autoComplete}
 keyboardType={props.keyboardType}
 secureTextEntry={props.secureTextEntry}
+dataDetectorTypes={props.dataDetectorTypes}
 />
-{props.error ? (<Text style={appStyles.appInputError}>{props.error}</Text>) : null }
+{props.error && props.error.length ?  (<Text style={appStyles.appInputError}>{props.error}</Text>) : null }
 </View>
 };
 

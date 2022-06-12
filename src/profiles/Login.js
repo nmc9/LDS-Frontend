@@ -4,7 +4,7 @@ import appStyles from '../appStyles';
 import AppButton from "../components/AppButton";
 import AppInput from "../components/AppInput";
 
-const Register = ({ route, navigation }) => {
+const Login = ({ route, navigation }) => {
 
 
   const data = {

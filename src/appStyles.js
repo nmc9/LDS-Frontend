@@ -18,7 +18,7 @@ export default StyleSheet.create({
 
   appButtonText:{
     fontWeight: 600,
-    color:"lightblue"
+    color:"lightgrey"
   },
 
 
@@ -31,6 +31,7 @@ export default StyleSheet.create({
     borderRadius: 6,
     color:'darkblue',
     borderColor:'darkred',
+    selectionColor:'darkred'
   },
 
   appInput: {
