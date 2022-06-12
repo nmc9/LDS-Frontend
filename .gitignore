@@ -56,3 +56,6 @@ dist/
 
 #environment
 .env
+
+#Logs
+core.rar

@@ -1,58 +1,46 @@
-import React, {useEffect, useState} from 'react'
-import { StyleSheet,Text,View,Button,TextInput,Pressable } from 'react-native';
-import appStyles from '../appStyles';
-import AppButton from "../components/AppButton";
-import AppInput from "../components/AppInput";
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native'
+import appStyles from '../appStyles'
+import AppButton from '../components/AppButton'
+import AppInput from '../components/AppInput'
 
 const Login = ({ route, navigation }) => {
-
-
   const data = {
-    name:"",
-    email:"",
-    password:"",
-    phone:"",
-    device_name:"Test",
-  };
-  const [form,_setForm] = useState(data);
-  const [errors,setErrors] = useState({});
+    email: '',
+    password: '',
+    device_name: 'Test'
+  }
+  const [form, _setForm] = useState(data)
+  const [errors, setErrors] = useState({})
 
-  const setForm = (_key,_value) => {
-    _setForm({...form, [_key]: _value});
+  const setForm = (_key, _value) => {
+    _setForm({ ...form, [_key]: _value })
   }
 
   const onClear = () => {
-    _setForm(data);
+    _setForm(data) 
     setErrors({})
   }
 
   const onSubmit = () => {
-    axios.post('register',form)
-    .then(({data}) => {
-      onClear();
-      //Take this data and store it as the user token
-      console.log(data);
-    }).catch((error) => {
-
-      let _errors = error?.response?.data?.errors;
-      if(!!_errors){
-        setErrors(_errors);
-      }
-    })
+    axios.post('login', form)
+      .then(({ data }) => {
+        onClear()
+        // Take this data and store it as the user token
+        console.log(data)
+      }).catch((error) => {
+        const _errors = error?.response?.data?.errors
+        if (_errors) {
+          setErrors(_errors)
+        }
+      })
   }
 
   return (
     <View style={registerStyles.container}>
-    <Text>{JSON.stringify(form)}</Text>
-    <AppInput 
-    error={errors.name}
-    onChangeText={(e) => {setForm('name',e);}}
-    value={form.name}
-    placeholder="Username"
-    ></AppInput>
-
+    
     <AppInput
-    onChangeText={(e) => {setForm('email',e);}}
+    onChangeText={(e) => { setForm('email', e) }}
     value={form.email}
     error={errors.email}
 
@@ -62,74 +50,50 @@ const Login = ({ route, navigation }) => {
     keyboardType="email-address"
     ></AppInput>
 
-
     <AppInput
-    onChangeText={(e) => {setForm('password',e);}}
+    onChangeText={(e) => { setForm('password', e) }}
     value={form.password}
     error={errors.password}
 
     placeholder="Password"
-    autoComplete="password-new"
+    autoComplete="password"
     secureTextEntry={true}
-    textContentType="newPassword"
+    textContentType="password"
     ></AppInput>
-
-    <AppInput
-    onChangeText={(e) => {setForm('phone',e);}}
-    value={form.phone}
-    error={errors.phone}
-
-    placeholder="Phone - Optional"
-    dataDetectorTypes="phoneNumber"
-    keyboardType="phone-pad"
-    textContentType="telephoneNumber"
-    ></AppInput>
-
 
     <View style={registerStyles.buttonHolder}>
-    <AppButton content="Clear" onPress={onClear}>
-    </AppButton>
-    <AppButton content="Register" onPress={onSubmit}>
-    </AppButton>
 
-
+    <AppButton content="Login" onPress={onSubmit}>
+    </AppButton>
 
     </View>
     </View>
-    );
+  )
 }
 
 const registerStyles = StyleSheet.create({
   container: {
     flex: 1,
-    // maxWidth: 400,
-    // padding: 300,
-    backgroundColor: "lightgrey",
-    alignItems:'left',
-    justifyContent:'center'
+    backgroundColor: 'lightgrey',
+    alignItems: 'left',
+    justifyContent: 'center'
   },
 
-  label:{
-    paddingTop:10,
-    paddingLeft:20,
-    alignSelf:'flex-start',
-    fontSize: 16,
+  label: {
+    paddingTop: 10,
+    paddingLeft: 20,
+    alignSelf: 'flex-start',
+    fontSize: 16
   },
 
-  buttonHolder:{
+  buttonHolder: {
     padding: 15,
-    flexDirection:'row',
-    flexWrap: "wrap",        // backgroundColor: "green",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingTop: 0,
+    paddingBottom: 0
+  }
 
-    paddingTop:0,
-
-    paddingBottom:0,
-  },
-
-
-
-  
 })
 
-export default Register;
-
+export default Login
