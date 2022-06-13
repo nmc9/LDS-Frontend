@@ -5,30 +5,43 @@ import AppField from '../components/AppField'
 import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
 
+import { useSelector, useDispatch } from 'react-redux';
+
+
 const Profile = ({ route, navigation }) => {
+
+  const { user, token } = useSelector(state => state.userReducer);
 
   const [profile, setProfile] = useState({})
   const [errors, setErrors] = useState({})
 
 
-  useEffect(() => {
-    axios.get('profile')
-    .then(({ data }) => {
-      console.log(data.data);
-      setProfile(data.data);
+  /* Need to look at this */
+  // useEffect(() => {
 
-    }).catch((error) => {
-      const _errors = error?.response?.data?.errors
-      if (_errors) {
-        setErrors(_errors)
-      }
+  //   if(!localStorage.getItem('token')){
+  //     navigation.replace('Login')
+  //   }
+  //   axios.get('profile')
+  //   .then(({ data }) => {
+  //     console.log(data.data);
+  //     setProfile(data.data);
 
-      setProfile({id:13,name:"NICK",email:"failed@gmailcomc"})
-    })
-  }, [])
+  //   }).catch((error) => {
+  //     const _errors = error?.response?.data?.errors
+  //     if (_errors) {
+  //       setErrors(_errors)
+  //     }
+
+  //     setProfile({id:13,name:"NICK",email:"failed@gmailcomc"})
+  //   })
+  // }, [])
 
   return (
     <View style={profileStyles.container}>
+
+    <Text>{JSON.stringify(user)}</Text>
+    <Text>{token}</Text>
 
     <Text style={profileStyles.welcome}>Welcome {profile.name}, Let's Do Stuff</Text>
 

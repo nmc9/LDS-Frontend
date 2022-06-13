@@ -4,7 +4,14 @@ import appStyles from '../appStyles'
 import AppButton from '../components/AppButton'
 import AppInput from '../components/AppInput'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser,setToken } from "../redux/actions";
+
 const Login = ({ route, navigation }) => {
+
+  const { user,token } = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+
   const data = {
     email: '',
     password: '',
@@ -23,8 +30,22 @@ const Login = ({ route, navigation }) => {
   }
 
   const onSubmit = () => {
+    // if(localStorage.getItem('token')){
+    //   navigation.replace('ViewProfile')
+    // }
+    // navigation.goBack();
+    // navigation.navigate('ViewProfile');
     axios.post('login', form)
       .then(({ data }) => {
+
+        dispatch(setUser(data.user))
+        dispatch(setToken(data.token))
+
+        console.log(data)
+
+        navigation.navigate('ViewProfile')
+
+        // dispatch
         onClear()
         // Take this data and store it as the user token
         console.log(data)
@@ -36,9 +57,17 @@ const Login = ({ route, navigation }) => {
       })
   }
 
+  const goToRegister = () => {
+      navigation.navigate('RegisterProfile')
+  }
+
   return (
-    <View style={registerStyles.container}>
+
     
+    <View style={registerStyles.container}>
+    <Text>{JSON.stringify(user)}</Text>
+        <Text>{token}</Text>
+
     <AppInput
     onChangeText={(e) => { setForm('email', e) }}
     value={form.email}
@@ -66,6 +95,9 @@ const Login = ({ route, navigation }) => {
     <AppButton content="Login" onPress={onSubmit}>
     </AppButton>
 
+    <AppButton content="Register" onPress={goToRegister}>
+    </AppButton>
+
     </View>
     </View>
   )
@@ -76,7 +108,7 @@ const registerStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'lightgrey',
     alignItems: 'left',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   label: {
