@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native'
 import appStyles from '../appStyles'
 import AppButton from '../components/AppButton'
@@ -7,10 +7,23 @@ import AppInput from '../components/AppInput'
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser,setToken } from "../redux/actions";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Login = ({ route, navigation }) => {
 
-  const { user,token } = useSelector(state => state.userReducer);
+  const { user,token,auth } = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
+
+  const userRef = useRef();
+
+
+  useEffect(() => {
+    // userRef.current.focus();
+  },[])
+
+  useEffect(() => {
+    setErrors({});
+  },[form])
 
   const data = {
     email: '',
@@ -24,49 +37,34 @@ const Login = ({ route, navigation }) => {
     _setForm({ ...form, [_key]: _value })
   }
 
-  const onClear = () => {
-    _setForm(data) 
-    setErrors({})
-  }
-
   const onSubmit = () => {
-    // if(localStorage.getItem('token')){
-    //   navigation.replace('ViewProfile')
-    // }
-    // navigation.goBack();
-    // navigation.navigate('ViewProfile');
     axios.post('login', form)
-      .then(({ data }) => {
+    .then(({ data }) => {
 
-        dispatch(setUser(data.user))
-        dispatch(setToken(data.token))
+      Auth.set(data.user,data.token);
+      navigation.reset({
+  index: 0,
+  routes: [{ name: 'Profile' }],
+})
 
-        console.log(data)
-
-        navigation.navigate('ViewProfile')
-
-        // dispatch
-        onClear()
-        // Take this data and store it as the user token
-        console.log(data)
-      }).catch((error) => {
-        const _errors = error?.response?.data?.errors
-        if (_errors) {
-          setErrors(_errors)
-        }
-      })
+    }).catch((error) => {
+      const _errors = error?.response?.data?.errors
+      if (_errors) {
+        setErrors(_errors)
+      }
+    })
   }
 
   const goToRegister = () => {
-      navigation.navigate('RegisterProfile')
+    navigation.navigate('Register')
   }
 
   return (
 
-    
+
     <View style={registerStyles.container}>
-    <Text>{JSON.stringify(user)}</Text>
-        <Text>{token}</Text>
+    <Text>{JSON.stringify(auth)}</Text>
+    <Text>{token}</Text>
 
     <AppInput
     onChangeText={(e) => { setForm('email', e) }}
@@ -100,7 +98,7 @@ const Login = ({ route, navigation }) => {
 
     </View>
     </View>
-  )
+    )
 }
 
 const registerStyles = StyleSheet.create({

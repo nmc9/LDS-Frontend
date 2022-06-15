@@ -19,13 +19,21 @@ import {Store} from "./src/redux/store";
 
 import axios from 'axios'
 
+// require('./src/axios.js')
 require('./src/bootstrap.js')
 
-axios.defaults.baseURL = 'http://api.lds.test/api' // process.env.API_URL;
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');;//"Bearer 3|EoJJ7AijUwpuCaVz5QBW2MKm7pkLV7LePXdY3eEW";
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-axios.defaults.headers.common.Accept = 'application/json'
-window.axios = axios
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+// axios.defaults.baseURL = 'http://api.lds.test/api' // process.env.API_URL;
+// axios.defaults.headers.common['Authorization'] = 'Bearer ' + AsyncStorage.getItem('@token');;//"Bearer 3|EoJJ7AijUwpuCaVz5QBW2MKm7pkLV7LePXdY3eEW";
+
+// AsyncStorage.getItem('@token').then((token) => { axios.defaults.headers.common['Authorization'] = 'Bearer ' +  token})
+// .catch(() => {});
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+// axios.defaults.headers.common.Accept = 'application/json'
+// window.axios = axios
 
 const Stack = createNativeStackNavigator()
 
@@ -44,25 +52,29 @@ export default function App () {
     <Provider store={Store}>
     <View style={styles.container}>
 
-    { Platform.OS === 'web' ? <WebNav></WebNav> : <></> }
+    {/*{ Platform.OS === 'web' ? <WebNav></WebNav> : <></> }*/}
 
     <NavigationContainer>
     <Stack.Navigator>
+
+
+    <Stack.Screen
+    name="Profile"
+    component={Profile}
+    // initialParams={{ user }}
+    options={{ title: 'Profile' }}
+    />
+
     <Stack.Screen
     name="Login"
     component={Login}
     // initialParams={{ user }}
     options={{ title: 'Login' }}
     />
-    <Stack.Screen
-    name="ViewProfile"
-    component={Profile}
-    // initialParams={{ user }}
-    options={{ title: 'Profile' }}
-    />
+
     
     <Stack.Screen
-    name="RegisterProfile"
+    name="Register"
     component={Register}
     // initialParams={{ user }}
     options={{ title: 'Register' }}
@@ -71,7 +83,7 @@ export default function App () {
     </Stack.Navigator>
     </NavigationContainer>
 
-    { Platform.OS !== 'web' ? <MobileNav></MobileNav> : <></> }
+    {/*{ Platform.OS !== 'web' ? <MobileNav></MobileNav> : <></> }*/}
     </View>
     </Provider>
 

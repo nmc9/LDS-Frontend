@@ -6,42 +6,52 @@ import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
 
 import { useSelector, useDispatch } from 'react-redux';
+import { setUser,setToken } from "../redux/actions";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Profile = ({ route, navigation }) => {
 
-  const { user, token } = useSelector(state => state.userReducer);
+  const { user, token, auth } = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+
+
+  const [thing,setThing] = useState(null);
 
   const [profile, setProfile] = useState({})
   const [errors, setErrors] = useState({})
 
+  useEffect(() => {
+    axios.get('profile').then(({data}) => {
+      setProfile(data.data);
+      setThing(JSON.stringify(data));
 
-  /* Need to look at this */
-  // useEffect(() => {
+    }).catch((error) => {
+      console.log(error.response.status)
+      onAuthFail(error,navigation);
+    });
 
-  //   if(!localStorage.getItem('token')){
-  //     navigation.replace('Login')
-  //   }
-  //   axios.get('profile')
-  //   .then(({ data }) => {
-  //     console.log(data.data);
-  //     setProfile(data.data);
+  },[])
 
-  //   }).catch((error) => {
-  //     const _errors = error?.response?.data?.errors
-  //     if (_errors) {
-  //       setErrors(_errors)
-  //     }
+  const onAuthFail = (error,navigation) => {
+    if(error?.response?.status == 401){
+      Auth.clear();
+      navigation.replace('Login');
+    }
+  }
 
-  //     setProfile({id:13,name:"NICK",email:"failed@gmailcomc"})
-  //   })
-  // }, [])
+
+  const logout = () => {
+    // dispatch(removeAuth());
+    Auth.clear();
+    navigation.replace('Login');
+  }
 
   return (
     <View style={profileStyles.container}>
 
-    <Text>{JSON.stringify(user)}</Text>
-    <Text>{token}</Text>
+    <Text>{JSON.stringify(auth)}</Text>
+    <Text>{thing}</Text>
 
     <Text style={profileStyles.welcome}>Welcome {profile.name}, Let's Do Stuff</Text>
 
@@ -50,6 +60,7 @@ const Profile = ({ route, navigation }) => {
     <AppField label="Email" content={profile.email}></AppField>
     {profile.phone ? <AppField label="Phone Number" content={profile.phone}></AppField> : null}
 
+    <Button onPress={logout} title="Logout"></Button>
     </View>
     )
 }

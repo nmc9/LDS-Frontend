@@ -1,8 +1,9 @@
-import {SET_USER, SET_TOKEN} from "./actions.js";
+import {SET_USER, SET_TOKEN, SET_AUTH, REMOVE_AUTH} from "./actions.js";
 
 const initState = {
 	user: {},
 	token: null,
+	auth:{},
 }
 
 function userReducer(state=initState,action){
@@ -13,6 +14,11 @@ function userReducer(state=initState,action){
 		case SET_TOKEN:
 		return {...state,token: action.payload};
 
+		case SET_AUTH:
+		return {...state,auth: action.payload};
+
+		case REMOVE_AUTH:
+		return {...state,auth: {}}
 		default:
 		return state;
 	}
