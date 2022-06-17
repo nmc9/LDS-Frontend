@@ -33,6 +33,12 @@ export default function App () {
     <NavigationContainer>
     <Stack.Navigator>
 
+    <Stack.Screen
+    name="Register"
+    component={Register}
+    // initialParams={{ user }}
+    options={{ title: 'Register' }}
+    />
 
     <Stack.Screen
     name="Profile"
@@ -49,12 +55,7 @@ export default function App () {
     />
 
     
-    <Stack.Screen
-    name="Register"
-    component={Register}
-    // initialParams={{ user }}
-    options={{ title: 'Register' }}
-    />
+
 
     </Stack.Navigator>
     </NavigationContainer>

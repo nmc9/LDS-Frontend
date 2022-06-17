@@ -63,8 +63,7 @@ const Login = ({ route, navigation }) => {
 
 
     <View style={registerStyles.container}>
-    <Text>{JSON.stringify(auth)}</Text>
-    <Text>{token}</Text>
+
 
     <AppInput
     onChangeText={(e) => { setForm('email', e) }}

@@ -70,7 +70,7 @@ export default StyleSheet.create({
     color: errorColor,
   },
 
-  appFieildWrapper:{
+  appFieldWrapper:{
     margin:appMargin,
 
   },

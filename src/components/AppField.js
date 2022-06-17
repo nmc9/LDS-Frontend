@@ -5,7 +5,11 @@ import appStyles, {spinnerColor} from '../appStyles'
 
 const AppField = (props) => {
 
-  return <View style={appStyles.appFieildWrapper}>
+  const computedWrapperStyle = () => {
+    return [appStyles.appFieldWrapper, {...props.wrapperStyle}]
+  }
+
+  return <View style={computedWrapperStyle()}>
   <View style={appStyles.appFieldLabelView} >
     <Text style={appStyles.appFieldLabel}>{props.label}</Text>
   </View>

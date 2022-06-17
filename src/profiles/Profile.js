@@ -60,9 +60,6 @@ const logout = () => {
   return (
     <View style={profileStyles.container}>
 
-    <Text>{JSON.stringify(auth)}</Text>
-      <Text>{thing}</Text>
-
       <Text style={profileStyles.welcome}>Welcome {profile?.name}, Let's Do Stuff</Text>
 
 
