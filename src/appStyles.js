@@ -1,12 +1,18 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet,Platform } from 'react-native'
 
 let spinnerColor = "darkblue"
 let labelWeight = "600";
 let primaryColor = "darkblue";
 let errorColor = "darkred";
 
-let appMargin = 12;
-let appPadding = 15;
+let appMargin = Platform.select({
+native: 24,
+default: 12
+});
+let appPadding = Platform.select({
+native: 3, // TODO bug with padding on different devices
+default: 15
+});
 
 
 export { spinnerColor,appMargin,primaryColor,errorColor,appPadding };
@@ -31,7 +37,7 @@ export default StyleSheet.create({
   },
 
   appInputWithError: {
-    height: 40,
+    height: 'auto',
     margin: appMargin,
     marginBottom: 2,
     borderWidth: 2,
@@ -39,31 +45,34 @@ export default StyleSheet.create({
     borderRadius: 6,
     color: primaryColor,
     borderColor: errorColor,
-    selectionColor: errorColor,
+    // selectionColor: errorColor,
   },
 
   appInput: {
-    height: 40,
+    height: 'auto',
     margin: appMargin,
     marginBottom: appMargin,
     borderWidth: 2,
     padding: appPadding,
+    paddingStart: 15,
+    paddingEnd: 15,
     borderRadius: 6,
     color: primaryColor,
     borderColor: 'blue',
   },
 
   appInputError: {
-    height: 10,
+    height: 'auto',
     margin: 0,
     fontWeight: labelWeight,
     fontSize: 10,
-    paddingStart: appPadding,
+    paddingStart: 30 /* TODO SET TO APP PADDING */,
     color: errorColor,
   },
 
   appFieildWrapper:{
     margin:appMargin,
+
   },
 
   appFieldLabel: {
@@ -71,16 +80,14 @@ export default StyleSheet.create({
     paddingStart:10,
     paddingEnd:10,
     fontWeight:labelWeight,
-    borderTopStartRadius:6,
-    borderTopEndRadius:6,
-    borderWidth:2,
+
     borderBottomWidth:0,
     color: primaryColor,
     borderColor: primaryColor,
   },
 
   appFieldContent:{
-    padding:10,
+    // padding:10,
     borderRadius:6,
     borderWidth:2,
     borderTopStartRadius:0,
@@ -99,4 +106,27 @@ export default StyleSheet.create({
     borderColor: primaryColor,
   },
 
+  appFieldLabelView:{
+    alignSelf: 'flex-start',
+    borderColor:primaryColor,
+    borderWidth:2,
+        borderTopStartRadius:6,
+    borderTopEndRadius:6,
+    borderBottomWidth:0,
+  },
+
+  appInputWrapper:{
+    height: 80,
+    // backgroundColor:'green',
+    // borderColor: 'yellow',
+    // borderWidth: 3.
+
+  }
+
+
 })
+
+
+// appInputWrapper
+// appInputWithError
+// appInput

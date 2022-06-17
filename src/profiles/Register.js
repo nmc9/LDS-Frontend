@@ -121,7 +121,7 @@ const Register = ({ route, navigation }) => {
       // maxWidth: 400,
       // padding: 300,
       backgroundColor: 'lightgrey',
-      alignItems: 'left',
+      alignItems: 'stretch',
       justifyContent: 'center'
     },
 

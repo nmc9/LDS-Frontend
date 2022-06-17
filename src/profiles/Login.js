@@ -43,9 +43,9 @@ const Login = ({ route, navigation }) => {
 
       Auth.set(data.user,data.token);
       navigation.reset({
-  index: 0,
-  routes: [{ name: 'Profile' }],
-})
+        index: 0,
+        routes: [{ name: 'Profile' }],
+      })
 
     }).catch((error) => {
       const _errors = error?.response?.data?.errors
@@ -105,7 +105,7 @@ const registerStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'lightgrey',
-    alignItems: 'left',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
 

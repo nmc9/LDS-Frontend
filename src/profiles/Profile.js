@@ -18,60 +18,71 @@ const Profile = ({ route, navigation }) => {
 
   const [thing,setThing] = useState(null);
 
-  const [profile, setProfile] = useState({})
+  const [profile, setProfile] = useState(null)
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
-    axios.get('profile').then(({data}) => {
+    Auth.load(() => {
+      axios.get('profile').then(({data}) => {
       setProfile(data.data);
       setThing(JSON.stringify(data));
 
     }).catch((error) => {
-      console.log(error.response.status)
+
+    console.log("DUMP OUT TO A FILE");
+
+      // console.log(error.response.status)
       onAuthFail(error,navigation);
     });
+  })
 
-  },[])
 
-  const onAuthFail = (error,navigation) => {
-    if(error?.response?.status == 401){
-      Auth.clear();
-      navigation.replace('Login');
-    }
+},[])
+
+const onAuthFail = (error,navigation) => {
+  if(error?.response?.status == 401){
+    Auth.clear();
+
+    navigation.replace('Login');
   }
+}
 
 
-  const logout = () => {
+const logout = () => {
     // dispatch(removeAuth());
     Auth.clear();
     navigation.replace('Login');
   }
 
+
+
+
   return (
     <View style={profileStyles.container}>
 
     <Text>{JSON.stringify(auth)}</Text>
-    <Text>{thing}</Text>
+      <Text>{thing}</Text>
 
-    <Text style={profileStyles.welcome}>Welcome {profile.name}, Let's Do Stuff</Text>
+      <Text style={profileStyles.welcome}>Welcome {profile?.name}, Let's Do Stuff</Text>
 
 
-    <AppField label="Name" content={profile.name}></AppField>
-    <AppField label="Email" content={profile.email}></AppField>
-    {profile.phone ? <AppField label="Phone Number" content={profile.phone}></AppField> : null}
+      <AppField label="Name" content={profile?.name}></AppField>
+      <AppField label="Email" content={profile?.email}></AppField>
+      {profile?.phone ? <AppField label="Phone Number" content={profile?.phone}></AppField> : null}
 
-    <Button onPress={logout} title="Logout"></Button>
-    </View>
-    )
-}
+      <Button onPress={logout} title="Logout"></Button>
 
-const profileStyles = StyleSheet.create({
-  container: {
-    flex: 1,
+      </View>
+      )
+  }
+
+  const profileStyles = StyleSheet.create({
+    container: {
+      flex: 1,
     // maxWidth: 400,
     // padding: 300,
     backgroundColor: 'lightgrey',
-    alignItems: 'left',
+    alignItems: 'flex-start',
     justifyContent: 'center'
   },
 
@@ -87,4 +98,4 @@ const profileStyles = StyleSheet.create({
 
 })
 
-export default Profile
+  export default Profile

@@ -6,7 +6,7 @@ import appStyles, {spinnerColor} from '../appStyles'
 const AppField = (props) => {
 
   return <View style={appStyles.appFieildWrapper}>
-  <View style={{ alignSelf: 'start'}} >
+  <View style={appStyles.appFieldLabelView} >
     <Text style={appStyles.appFieldLabel}>{props.label}</Text>
   </View>
 

@@ -1,3 +1,6 @@
+require('./src/bootstrap.js')
+
+
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { StyleSheet, Platform, Text, View, Button } from 'react-native'
@@ -17,36 +20,9 @@ import MobileNav from "./src/MobileNav";
 import { Provider } from "react-redux";
 import {Store} from "./src/redux/store";
 
-import axios from 'axios'
-
-// require('./src/axios.js')
-require('./src/bootstrap.js')
-
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-// axios.defaults.baseURL = 'http://api.lds.test/api' // process.env.API_URL;
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + AsyncStorage.getItem('@token');;//"Bearer 3|EoJJ7AijUwpuCaVz5QBW2MKm7pkLV7LePXdY3eEW";
-
-// AsyncStorage.getItem('@token').then((token) => { axios.defaults.headers.common['Authorization'] = 'Bearer ' +  token})
-// .catch(() => {});
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-// axios.defaults.headers.common.Accept = 'application/json'
-// window.axios = axios
-
 const Stack = createNativeStackNavigator()
 
 export default function App () {
-
-
-  // const [user, setUser] = useState({ id: 1, name: 'Test', token: 'ASDB123' })
-
-  // const refreshToken = () => {
-  //   const _user = { id: 1, name: 'Joe Smith', token: 'ASDB123' }
-  //   _user.token = '123ABC'
-  //   setUser(_user)
-  // }
 
   return (
     <Provider store={Store}>
@@ -101,9 +77,6 @@ const styles = StyleSheet.create({
       },
       android: {
         backgroundColor: 'green'
-      },
-      'firefox': {
-        'backgroundColor': 'orange',
       },
       'web': {
         backgroundColor: 'pink',
