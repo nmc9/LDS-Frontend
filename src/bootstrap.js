@@ -21,18 +21,18 @@ window.formatTime = (time) => {
     let hours = time?.hours;
     let minutes = time?.minutes;
     if(hours === undefined){
-      return "";
-  }
-  if(minutes === undefined){
-      return "";
-  }
+        return "";
+    }
+    if(minutes === undefined){
+        return "";
+    }
 
-  let ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-  minutes = minutes < 10 ? '0'+minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + ampm;
-  return strTime;
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
 }
 
 

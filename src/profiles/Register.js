@@ -57,7 +57,7 @@ const Register = ({ route, navigation }) => {
 
   const onSubmit = () => {
     let _form = form;
-    _form.availability = {
+    _form.availabilities = {
       sunday:Sunday,
       monday:Monday,
       tuesday:Tuesday,

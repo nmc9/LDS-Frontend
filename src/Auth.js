@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 class Auth{
 
 	static set(user,token){
-		console.log("SET AUTH");
 		AsyncStorage.setItem('user',JSON.stringify(user)).catch((e) => {console.log(e)});
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' +  token
 		AsyncStorage.setItem('token',token).catch((e) => {console.log(e, "TOKEN HERE")});
@@ -27,10 +26,7 @@ class Auth{
 	}
 
 	static load(callback = null){
-		console.log("LOAD TOKEN");
 		AsyncStorage.getItem('token').then((token) => { 
-			console.log("TOKEN WAS SET");
-			console.log(token);
 			axios.defaults.headers.common['Authorization'] = 'Bearer ' +  token;
 			if(callback){
 				callback();
