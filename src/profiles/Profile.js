@@ -92,7 +92,7 @@ const Profile = ({ route, navigation }) => {
 
     {profile?.phone ? <AppField label="Phone Number" content={profile?.phone}></AppField> : null}
 
-        <Text style={profileStyles.welcome}>Availability</Text>
+    <Text style={profileStyles.welcome}>Availability</Text>
 
 
     { sunday?.start ? <AppField label="Sunday" content={getLabelText(sunday?.start,sunday?.end,)}></AppField> : null}
