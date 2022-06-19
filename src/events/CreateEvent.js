@@ -101,7 +101,7 @@ const CreateEvent = ({ route, navigation }) => {
     error={errors.end_datetime}
     onChangeText={(e) => setForm({ ...form, end_datetime: e })}
     value={form.end_datetime}
-    placeholder="Start Date Ex: (2022-12-12 12:01:01)"
+    placeholder="End Date Ex: (2022-12-12 12:01:01)"
     ></AppInput>
 
 
