@@ -7,10 +7,12 @@ import { StyleSheet, Platform, Text, View, Button } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import CreateEvent from './src/pages/CreateEvent.js'
 import Register from './src/profiles/Register.js'
 import Login from './src/profiles/Login.js'
 import Profile from './src/profiles/Profile.js'
+
+import Event from './src/events/Event.js'
+import CreateEvent from './src/events/CreateEvent.js'
 
 import WebNav from "./src/WebNav";
 import MobileNav from "./src/MobileNav";
@@ -54,6 +56,20 @@ export default function App () {
     component={Register}
     // initialParams={{ user }}
     options={{ title: 'Register' }}
+    />
+
+         <Stack.Screen
+    name="Event"
+    component={Event}
+    // initialParams={{ user }}
+    options={{ title: 'Event' }}
+    />
+
+         <Stack.Screen
+    name="CreateEvent"
+    component={CreateEvent}
+    // initialParams={{ user }}
+    options={{ title: 'CreateEvent' }}
     />
 
 

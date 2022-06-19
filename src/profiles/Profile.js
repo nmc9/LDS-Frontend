@@ -35,17 +35,13 @@ const Profile = ({ route, navigation }) => {
         console.log(data.data?.sunday);
 
         data.data?.sunday ? setSunday(data.data?.sunday) : null;
+        data.data?.monday ? setMonday(data.data?.monday) : null;
+        data.data?.tuesday ? setTuesday(data.data?.tuesday) : null;
+        data.data?.wednesday ? setWednesday(data.data?.wednesday) : null;
+        data.data?.thursday ? setThursday(data.data?.thursday) : null;
+        data.data?.friday ? setFriday(data.data?.friday) : null;
+        data.data?.saturday ? setSaturday(data.data?.saturday) : null;
 
-        // data.data?.monday ? setMonday(data.data?.monday) : null;
-        // data.data?.tuesday ? setTuesday(data.data?.tuesday) : null;
-        // data.data?.wednesday ? setWednesday(data.data?.wednesday) : null;
-        // data.data?.thursday ? setThursday(data.data?.thursday) : null;
-        // data.data?.friday ? setFriday(data.data?.friday) : null;
-        // data.data?.saturday ? setSaturday(data.data?.saturday) : null;
-
-        console.log(sunday)
-        // setAvailability({...availability},...data.data);
-        // console.log(availability);
 
       }).catch((error) => {
         console.log(error)
@@ -105,6 +101,9 @@ const Profile = ({ route, navigation }) => {
 
 
     <AppButton onPress={logout} content="Logout"></AppButton>
+
+    <AppButton onPress={() => {  navigation.navigate('CreateEvent'); }} content="Create Events"></AppButton>
+
 
     </ScrollView>
     )
