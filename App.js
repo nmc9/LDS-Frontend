@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Register from './src/profiles/Register.js'
 import Login from './src/profiles/Login.js'
 import Profile from './src/profiles/Profile.js'
+import SearchUsers from './src/profiles/SearchUsers.js'
 
 import Event from './src/events/Event.js'
 import CreateEvent from './src/events/CreateEvent.js'
@@ -35,7 +36,12 @@ export default function App () {
     <NavigationContainer>
     <Stack.Navigator>
 
-   
+    <Stack.Screen
+    name="SearchUsers"
+    component={SearchUsers}
+    // initialParams={{ user }}
+    options={{ title: 'SearchUsers' }}
+    />   
 
     <Stack.Screen
     name="Profile"
