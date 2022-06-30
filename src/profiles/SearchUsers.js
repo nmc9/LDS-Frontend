@@ -4,7 +4,10 @@ import appStyles, {appPadding,appMargin,primaryColor} from '../appStyles'
 import AppField from '../components/AppField'
 import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
-import { SearchBar } from "@rneui/themed";
+import SearchBar from "../components/SearchBar";
+// 
+import { NativeBaseProvider, Box } from "native-base";
+
 
 
 const SearchUsers = ({ route, navigation }) => {
@@ -19,6 +22,7 @@ const SearchUsers = ({ route, navigation }) => {
   const [saturday,setSaturday] = useState({start:"",end:""});
 
   const [errors, setErrors] = useState({})
+
 
   useEffect(() => {
     Auth.load(() => {
@@ -78,6 +82,8 @@ const SearchUsers = ({ route, navigation }) => {
 
   return (
     <ScrollView style={profileStyles.container}>
+
+      <SearchBar></SearchBar>
     <Text style={profileStyles.welcome}>Welcome {profile?.name}, Let's Do Stuff</Text>
 
 

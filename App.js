@@ -25,11 +25,16 @@ import {Store} from "./src/redux/store";
 
 const Stack = createNativeStackNavigator()
 
+import { NativeBaseProvider, Box } from "native-base";
+
 export default function App () {
 
   return (
     <Provider store={Store}>
+    <NativeBaseProvider>
+
     <View style={styles.container}>
+      <Box>Hello world</Box>
 
     {/*{ Platform.OS === 'web' ? <WebNav></WebNav> : <></> }*/}
 
@@ -84,6 +89,8 @@ export default function App () {
 
     {/*{ Platform.OS !== 'web' ? <MobileNav></MobileNav> : <></> }*/}
     </View>
+        </NativeBaseProvider>
+
     </Provider>
 
     )
@@ -94,21 +101,21 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: 'grey',
     alignItems: 'stretch',
-    ...Platform.select({
-      ios: {
-        backgroundColor: 'red'
-      },
-      android: {
-        backgroundColor: 'green'
-      },
-      'web': {
-        backgroundColor: 'pink',
-      },
-      default: {
-        // other platforms, web for example
-        backgroundColor: 'blue'
-      }
-    })
+    // ...Platform.select({
+    //   ios: {
+    //     backgroundColor: 'red'
+    //   },
+    //   android: {
+    //     backgroundColor: 'green'
+    //   },
+    //   'web': {
+    //     backgroundColor: 'pink',
+    //   },
+    //   default: {
+    //     // other platforms, web for example
+    //     backgroundColor: 'blue'
+    //   }
+    // })
     // justifyContent: 'center'
   },
 

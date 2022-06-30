@@ -1,6 +1,11 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'https://fdf2-73-101-31-51.ngrok.io/api' // process.env.API_URL;
+
+console.log(process.env);
+console.log(process.env.EXPO_DEVICE_MODE);
+console.log(process.env.REACT_APP_DEVICE_MODE);
+
+axios.defaults.baseURL = process.env.API_URL;
 // axios.defaults.headers.common['Authorization'] = "Bearer" + null;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.headers.common.Accept = 'application/json'
