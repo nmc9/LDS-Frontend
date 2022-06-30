@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "LetsDoStuff",
+    "slug": "letsdostuff",
     "version": "1.0.1",
     "assetBundlePatterns": [
       "**/*"
