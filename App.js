@@ -34,19 +34,13 @@ export default function App () {
     <NativeBaseProvider>
 
     <View style={styles.container}>
-      <Box>Hello world</Box>
 
     {/*{ Platform.OS === 'web' ? <WebNav></WebNav> : <></> }*/}
 
     <NavigationContainer>
     <Stack.Navigator>
 
-    <Stack.Screen
-    name="SearchUsers"
-    component={SearchUsers}
-    // initialParams={{ user }}
-    options={{ title: 'SearchUsers' }}
-    />   
+
 
     <Stack.Screen
     name="Profile"
@@ -83,6 +77,12 @@ export default function App () {
     options={{ title: 'CreateEvent' }}
     />
 
+    <Stack.Screen
+    name="SearchUsers"
+    component={SearchUsers}
+    // initialParams={{ user }}
+    options={{ title: 'SearchUsers' }}
+    />   
 
     </Stack.Navigator>
     </NavigationContainer>
