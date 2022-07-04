@@ -11,9 +11,12 @@ const ProfileFooter = ({}) => {
 
   const [imaginaryEmail,setImaginaryEmail] = useState([]);
 
+  const [wasSent,setWasSent] = useState(false);
+
 
   const sendImaginaryFriendRequest = (error,navigation) => {
       axios.post('imaginary/friend/',{"email":imaginaryEmail}).then(({data}) => {
+        setWasSent(true);
         // setUsers(data.data);
 
       }).catch((error) => {
@@ -29,7 +32,7 @@ const ProfileFooter = ({}) => {
     <Stack p="4" space={3}>
     <Stack space={2}>
     <Heading size="md" ml="-1">
-    Send an email to a nonexistant user?
+    { !wasSent ? "Send an email to a nonexistant user?" : "Request Was Sent!" }
     </Heading>
     </Stack>
     <HStack alignItems="center" space={4} justifyContent="space-between">

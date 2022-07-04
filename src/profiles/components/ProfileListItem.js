@@ -8,8 +8,11 @@ import AppButton from "../../components/AppButton";
 
 const ProfileListItem = ({ username, email, id }) => {
 
+  const [wasAdded,setWasAdded] = useState(false);
+
   const sendFriendRequest = (error,navigation) => {
       axios.post('friend/', {user_id: id} ).then(({data}) => {
+        setWasAdded(true);
         // setUsers(data.data);
 
       }).catch((error) => {
@@ -35,6 +38,7 @@ const ProfileListItem = ({ username, email, id }) => {
     
     </AppButton>*/}
     <HStack alignItems="center" space={4} justifyContent="space-between">
+    {wasAdded ? <Text>Friend Request Sent</Text> : null}
     <AppButton content="Add Friend" onPress={sendFriendRequest}>
     </AppButton>    
     </HStack>

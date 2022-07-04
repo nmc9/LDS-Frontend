@@ -68,9 +68,6 @@ const SearchUsers = ({ route, navigation }) => {
     <ScrollView style={searchUsersStyles.container}>
     <Text>{ searchTerm } </Text>
     <SearchBar placeholder="Search Username/Email" value={searchTerm} onChangeText={handleChange}></SearchBar>
-
-            <Text>{ JSON.stringify(users) }</Text>
-
     <FlatList
         data={users}
         renderItem={renderProfileListItem}
