@@ -38,11 +38,18 @@ const Event = ({ route, navigation }) => {
   }
 
   const getEventTime = () =>{
-    console.log("ASDASD")
     if(!event?.start_datetime){
       return ""
     }
     return "From: " + event.start_datetime + " to " + event.end_datetime;
+  }
+
+  const goToEditEventPage = () => {
+    if(event?.id){
+      navigation.navigate("EditEvent",{
+        eventId: event.id,
+      });      
+    }
   }
 
 
@@ -50,14 +57,13 @@ const Event = ({ route, navigation }) => {
 
   return (
     <ScrollView style={eventStyles.container}>
-{/*    <Text style={eventStyles.welcome}>Welcome {profile?.name}, Let's Do Stuff</Text>
-
-*/}
     <AppField label="Event Name" content={event?.name}></AppField>
     <AppField label="Description" content={event?.description}></AppField>
     <AppField label="Location" content={event?.location}></AppField>
 
     <AppField label="Event Dates" content={getEventTime()}></AppField>
+
+    <AppButton content="Edit Event" onPress={goToEditEventPage}></AppButton>
 
     </ScrollView>
     )

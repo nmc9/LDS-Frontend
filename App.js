@@ -11,9 +11,11 @@ import Register from './src/profiles/Register.js'
 import Login from './src/profiles/Login.js'
 import Profile from './src/profiles/Profile.js'
 import SearchUsers from './src/profiles/SearchUsers.js'
+import SearchEvents from './src/events/SearchEvents.js'
 
 import Event from './src/events/Event.js'
 import CreateEvent from './src/events/CreateEvent.js'
+import EditEvent from './src/events/EditEvent.js'
 
 import WebNav from "./src/WebNav";
 import MobileNav from "./src/MobileNav";
@@ -41,6 +43,12 @@ export default function App () {
     <Stack.Navigator>
 
 
+    <Stack.Screen
+    name="SearchEvents"
+    component={SearchEvents}
+    // initialParams={{ user }}
+    options={{ title: 'Search Events' }}
+    />   
 
     <Stack.Screen
     name="Profile"
@@ -71,18 +79,28 @@ export default function App () {
     />
 
          <Stack.Screen
+    name="EditEvent"
+    component={EditEvent}
+    // initialParams={{ user }}
+    options={{ title: 'Edit Event' }}
+    />
+
+         <Stack.Screen
     name="CreateEvent"
     component={CreateEvent}
     // initialParams={{ user }}
-    options={{ title: 'CreateEvent' }}
+    options={{ title: 'Create Event' }}
     />
 
     <Stack.Screen
     name="SearchUsers"
     component={SearchUsers}
     // initialParams={{ user }}
-    options={{ title: 'SearchUsers' }}
+    options={{ title: 'Search Users' }}
     />   
+
+
+
 
     </Stack.Navigator>
     </NavigationContainer>
