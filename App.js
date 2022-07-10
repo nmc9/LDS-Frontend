@@ -43,12 +43,7 @@ export default function App () {
     <Stack.Navigator>
 
 
-    <Stack.Screen
-    name="SearchEvents"
-    component={SearchEvents}
-    // initialParams={{ user }}
-    options={{ title: 'Search Events' }}
-    />   
+
 
     <Stack.Screen
     name="Profile"
@@ -99,7 +94,12 @@ export default function App () {
     options={{ title: 'Search Users' }}
     />   
 
-
+    <Stack.Screen
+    name="SearchEvents"
+    component={SearchEvents}
+    // initialParams={{ user }}
+    options={{ title: 'Search Events' }}
+    />   
 
 
     </Stack.Navigator>

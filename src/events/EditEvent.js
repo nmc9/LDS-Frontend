@@ -58,7 +58,7 @@ const EditEvent = ({ route, navigation }) => {
 
   const onSubmit = () => {
     // axios.post('event/', form)
-    axios.put('event/' . form.id, form)
+    axios.put('event/' + form.id, form)
     .then(({ data }) => {
 
       console.log(data);

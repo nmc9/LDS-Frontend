@@ -22,17 +22,8 @@ const SearchEvents = ({ route, navigation }) => {
 
   useEffect(() => {
     Auth.load(() => {
-      // setEvents([{
-      //   id:3,
-      //   name:"Beach Trip",
-      //   location: "Virginia Beach",
-      //   description: "This is a breach Trip",
-      //   time_frame_text: { start:"June 1st 2022 (Monday) 10AM EST", end:"June 2nd 2022 (Tuesday) 3PM EST"},
-      //   time_frame_short: { start:"June 1st 10AM", end:"June 2nd 3PM"},
-      //   time_frame: {anObject: "Determined by backend"}
-      // }]);
-      axios.get('search/event').then(({data}) => {
-        setUsers(data.data);
+      axios.get('event').then(({data}) => {
+        setEvents(data.data);
 
       }).catch((error) => {
 
@@ -47,8 +38,8 @@ const SearchEvents = ({ route, navigation }) => {
 
 
   const SearchEvents = (value) => {
-      axios.get('search/event?search=' + value).then(({data}) => {
-        setUsers(data.data);
+      axios.get('event?search=' + value).then(({data}) => {
+        setEvents(data.data);
 
       }).catch((error) => {
 
@@ -76,8 +67,7 @@ const SearchEvents = ({ route, navigation }) => {
 
   return (
     <ScrollView style={SearchEventsStyles.container}>
-    <Text>{ searchTerm } </Text>
-    <SearchBar placeholder="Search Username/Email" value={searchTerm} onChangeText={handleChange}></SearchBar>
+    <SearchBar placeholder="Search Events" value={searchTerm} onChangeText={handleChange}></SearchBar>
     <FlatList
         data={events}
         renderItem={renderEventListItem}
