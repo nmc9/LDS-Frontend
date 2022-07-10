@@ -17,6 +17,8 @@ import Event from './src/events/Event.js'
 import CreateEvent from './src/events/CreateEvent.js'
 import EditEvent from './src/events/EditEvent.js'
 
+import SendInvitations from "./src/invitations/SendInvitations.js";
+
 import WebNav from "./src/WebNav";
 import MobileNav from "./src/MobileNav";
 
@@ -43,6 +45,12 @@ export default function App () {
     <Stack.Navigator>
 
 
+    <Stack.Screen
+    name="SendInvitations"
+    component={SendInvitations}
+    // initialParams={{ user }}
+    options={{ title: 'Event Invitations' }}
+    />
 
 
     <Stack.Screen
