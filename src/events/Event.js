@@ -52,6 +52,15 @@ const Event = ({ route, navigation }) => {
     }
   }
 
+  const goToSendInvitationPage = () => {
+    if(event?.id){
+      navigation.navigate("SendInvitations",{
+        eventId: event.id,
+        eventName: event.name,
+      });      
+    }
+  }
+
 
 
 
@@ -64,6 +73,7 @@ const Event = ({ route, navigation }) => {
     <AppField label="Event Dates" content={getEventTime()}></AppField>
 
     <AppButton content="Edit Event" onPress={goToEditEventPage}></AppButton>
+    <AppButton onPress={goToSendInvitationPage} content="Invite"></AppButton>
 
     </ScrollView>
     )

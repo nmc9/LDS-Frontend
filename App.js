@@ -44,15 +44,6 @@ export default function App () {
     <NavigationContainer>
     <Stack.Navigator>
 
-
-    <Stack.Screen
-    name="SendInvitations"
-    component={SendInvitations}
-    // initialParams={{ user }}
-    options={{ title: 'Event Invitations' }}
-    />
-
-
     <Stack.Screen
     name="Profile"
     component={Profile}
@@ -109,6 +100,13 @@ export default function App () {
     options={{ title: 'Search Events' }}
     />   
 
+
+    <Stack.Screen
+    name="SendInvitations"
+    component={SendInvitations}
+    // initialParams={{ user }}
+    options={{ title: 'Event Invitations' }}
+    />
 
     </Stack.Navigator>
     </NavigationContainer>

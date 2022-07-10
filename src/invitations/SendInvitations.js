@@ -15,9 +15,9 @@ import {EVERYONE,AVAILABLE} from "./components/SendInvitationHeader";
 const SendInvitations = ({ route, navigation }) => {
 
 
-  // const { eventId, eventName } = route.params;
-  const eventId = 7;
-  const eventName = "place";
+  const { eventId, eventName } = route.params;
+  // const eventId = 7;
+  // const eventName = "place";
 
 
   const [users, setUsers] = useState([{
