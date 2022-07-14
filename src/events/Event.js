@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Button, TextInput, Pressable,ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput, Pressable,ScrollView,FlatList } from 'react-native'
 import appStyles, {appPadding,appMargin,primaryColor} from '../appStyles'
 import AppField from '../components/AppField'
 import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
-
+import UserInvitedListItem from "../invitations/components/UserInvitedListItem";
+import UserInvitedHeader from "../invitations/components/UserInvitedHeader";
 
 const Event = ({ route, navigation }) => {
 
@@ -12,6 +13,9 @@ const Event = ({ route, navigation }) => {
   const { eventId } = route.params;
 
   const [event, setEvent] = useState(null)
+
+  const [invitedUsers,setInvitedUsers] = useState([
+  ]);
 
   const [errors, setErrors] = useState({})
 
@@ -61,7 +65,34 @@ const Event = ({ route, navigation }) => {
     }
   }
 
+  const searchAccepted = () => {
+      axios.get('event/' + eventId + '/accepted').then(({data}) => {
+        setInvitedUsers(data.data);
 
+      }).catch((error) => {
+
+        onAuthFail(error,navigation);
+      });
+
+  }
+  const searchPending = () => {
+      axios.get('event/' + eventId + '/pending').then(({data}) => {
+        setInvitedUsers(data.data);
+
+      }).catch((error) => {
+
+        onAuthFail(error,navigation);
+      });
+
+  }
+
+  const renderUserInvitedListItem = ({ item }) => (
+    <UserInvitedListItem user={item}></UserInvitedListItem>
+    );
+
+    const renderUserInvitedHeader = ({ item }) => (
+    <UserInvitedHeader onAccepted={searchAccepted} onPending={searchPending} onInvite={goToSendInvitationPage} navigation={navigation}></UserInvitedHeader>
+    );
 
 
   return (
@@ -73,7 +104,16 @@ const Event = ({ route, navigation }) => {
     <AppField label="Event Dates" content={getEventTime()}></AppField>
 
     <AppButton content="Edit Event" onPress={goToEditEventPage}></AppButton>
-    <AppButton onPress={goToSendInvitationPage} content="Invite"></AppButton>
+
+
+
+    <FlatList
+      style={{padding: appPadding}}
+      data={invitedUsers}
+      renderItem={renderUserInvitedListItem}
+      keyExtractor={(invitedUser) => invitedUser.id}
+      ListHeaderComponent={renderUserInvitedHeader}
+    />
 
     </ScrollView>
     )
