@@ -16,14 +16,9 @@ const SendInvitations = ({ route, navigation }) => {
 
 
   const { eventId, eventName } = route.params;
-  // const eventId = 7;
-  // const eventName = "place";
 
 
-  const [users, setUsers] = useState([{
-    id: 1,
-    name:"Example",
-  }])
+  const [users, setUsers] = useState([])
   const [errors, setErrors] = useState({})
 
   const removeUser = (userId) => {
@@ -31,15 +26,31 @@ const SendInvitations = ({ route, navigation }) => {
   }
 
   const searchUsers = (type) => {
-    console.log(type == EVERYONE);
-    console.log(type == AVAILABLE);
-
+    if(type == EVERYONE){
+      axios.get('friend').then(({data}) => {
+        setUsers(data.data);
+      }).catch((error) => {
+        alert(error);
+      });
+    }else if (type == AVAILABLE){
+      axios.get('event/' + eventId + '/available').then(({data}) => {
+        setUsers(data.data);
+      }).catch((error) => {
+        alert(error);
+      });
+    }
   }
 
   const sendInvitations = () => {
-    console.log(users.length);
-    // console.log(type == AVAILABLE);
+    let ids = users.map(x => {return x.id})
 
+    axios.post('event/' + eventId + '/invitation',{
+      users: ids
+      }).then(({data}) => {
+      alert("Invitations Sent");
+    }).catch((error) => {
+      alert(error);
+    });
   }
 
 
@@ -47,12 +58,12 @@ const SendInvitations = ({ route, navigation }) => {
     <InviteFriendListItem eventId={eventId} user={item} navigation={navigation} onRemove={removeUser}></InviteFriendListItem>
     );
 
-  const renderSendInvitationHeader = ({ item }) => (
+    const renderSendInvitationHeader = ({ item }) => (
     <SendInvitationHeader eventId={eventId} onSearch={searchUsers} onSend={sendInvitations} navigation={navigation}></SendInvitationHeader>
     );
 
 
-  return (
+    return (
     <ScrollView style={sendInvitationsStyles.container}>
     <AppField label="Event Name" content={eventName}></AppField>
 
@@ -69,28 +80,28 @@ const SendInvitations = ({ route, navigation }) => {
 
     </ScrollView>
     )
-}
-
-const sendInvitationsStyles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // maxWidth: 400,
-    // padding: 300,
-    backgroundColor: 'lightgrey',
-    // alignItems: 'flex-start',
-    // justifyContent: 'center'
-  },
-
-  welcome:{
-    margin:appMargin,
-    padding:appPadding,
-    fontSize:"600",
-    color:primaryColor,
-    fontSize:32,
-    borderBottomWidth:2,
-    borderColor:primaryColor
   }
 
-})
+  const sendInvitationsStyles = StyleSheet.create({
+    container: {
+      // flex: 1,
+      // maxWidth: 400,
+      // padding: 300,
+      backgroundColor: 'lightgrey',
+      // alignItems: 'flex-start',
+      // justifyContent: 'center'
+    },
 
-export default SendInvitations
+    welcome:{
+      margin:appMargin,
+      padding:appPadding,
+      fontSize:"600",
+      color:primaryColor,
+      fontSize:32,
+      borderBottomWidth:2,
+      borderColor:primaryColor
+    }
+
+  })
+
+  export default SendInvitations
