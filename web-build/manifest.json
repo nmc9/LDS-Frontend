@@ -1,0 +1,7 @@
+{
+  "display": "standalone",
+  "lang": "en",
+  "name": "LetsDoStuff",
+  "short_name": "LetsDoStuff",
+  "start_url": "/?utm_source=web_app_manifest"
+}

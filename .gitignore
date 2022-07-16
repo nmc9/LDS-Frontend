@@ -51,7 +51,7 @@ buck-out/
 
 # Expo
 .expo/
-web-build/
+#web-build/
 dist/
 
 #environment
