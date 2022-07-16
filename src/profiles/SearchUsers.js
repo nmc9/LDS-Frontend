@@ -61,12 +61,11 @@ const SearchUsers = ({ route, navigation }) => {
     <ProfileListItem username={item.name} email={item.email} id={item.id}></ProfileListItem>
   );
   const renderProfileFooter = ({ item }) => (
-    <ProfileFooter data={{test:"EXTRA",test1:"TEST"}}></ProfileFooter>
+    <ProfileFooter data={{}}></ProfileFooter>
   );
 
   return (
     <ScrollView style={searchUsersStyles.container}>
-    <Text>{ searchTerm } </Text>
     <SearchBar placeholder="Search Username/Email" value={searchTerm} onChangeText={handleChange}></SearchBar>
     <FlatList
         data={users}

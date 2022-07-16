@@ -4,7 +4,7 @@ import appStyles, {appPadding,appMargin,primaryColor} from '../appStyles'
 import AppField from '../components/AppField'
 import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
-import UserInvitedListItem from "../invitations/components/UserInvitedListItem";
+import UserinvitedListItem from "../invitations/components/UserinvitedListItem";
 import UserInvitedHeader from "../invitations/components/UserInvitedHeader";
 
 const Event = ({ route, navigation }) => {
@@ -86,8 +86,8 @@ const Event = ({ route, navigation }) => {
 
   }
 
-  const renderUserInvitedListItem = ({ item }) => (
-    <UserInvitedListItem user={item}></UserInvitedListItem>
+  const renderUserinvitedListItem = ({ item }) => (
+    <UserinvitedListItem user={item}></UserinvitedListItem>
     );
 
     const renderUserInvitedHeader = ({ item }) => (
@@ -108,9 +108,10 @@ const Event = ({ route, navigation }) => {
 
 
     <FlatList
+    
       style={{padding: appPadding}}
       data={invitedUsers}
-      renderItem={renderUserInvitedListItem}
+      renderItem={renderUserinvitedListItem}
       keyExtractor={(invitedUser) => invitedUser.id}
       ListHeaderComponent={renderUserInvitedHeader}
     />
