@@ -11,6 +11,7 @@ import Register from './src/profiles/Register.js'
 import Login from './src/profiles/Login.js'
 import Profile from './src/profiles/Profile.js'
 import SearchUsers from './src/profiles/SearchUsers.js'
+import SearchFriends from "./src/profiles/SearchFriends.js"
 import SearchEvents from './src/events/SearchEvents.js'
 
 import Event from './src/events/Event.js'
@@ -99,6 +100,14 @@ export default function App () {
     // initialParams={{ user }}
     options={{ title: 'Search Events' }}
     />   
+
+    <Stack.Screen
+    name="SearchFriends"
+    component={SearchFriends}
+    // initialParams={{ user }}
+    options={{ title: 'Search Friends' }}
+    />   
+
 
 
     <Stack.Screen

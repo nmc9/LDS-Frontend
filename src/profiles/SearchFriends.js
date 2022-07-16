@@ -8,22 +8,22 @@ import SearchBar from "../components/SearchBar";
 // 
 import { NativeBaseProvider, VStack, Box, Divider, Heading, Stack, HStack } from "native-base";
 import debounce from 'lodash.debounce';
-import ProfileListItem from "./components/ProfileListItem";
-import ProfileFooter from "./components/ProfileFooter";
+import FriendListItem from "./components/FriendListItem";
+// import FriendFooter from "./components/FriendFooter";
 
 
-const SearchUsers = ({ route, navigation }) => {
+const SearchFriends = ({ route, navigation }) => {
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [users,setUsers] = useState([]);
+  const [friends,setFriends] = useState([{name:"test",id:234,email:"nick@gmail.com"}]);
 
   const [errors, setErrors] = useState({})
 
 
   useEffect(() => {
     Auth.load(() => {
-      axios.get('search/profile').then(({data}) => {
-        setUsers(data.data);
+      axios.get('search/friends').then(({data}) => {
+        setFriends(data.data);
 
       }).catch((error) => {
 
@@ -32,20 +32,31 @@ const SearchUsers = ({ route, navigation }) => {
     })
   },[])
 
-  const debSearchUsers = useCallback(debounce(query => {
-    searchUsers(query);
+  const debSearchFriends = useCallback(debounce(query => {
+    SearchFriends(query);
   }, 400), [])
 
 
-  const searchUsers = (value) => {
-      axios.get('search/profile?search=' + value).then(({data}) => {
-        setUsers(data.data);
+  const SearchFriends = (value) => {
+      axios.get('search/friends?search=' + value).then(({data}) => {
+        setFriends(data.data);
 
       }).catch((error) => {
 
         onAuthFail(error,navigation);
       });
   }
+
+  const removeFriend = (friend_id) => {
+      axios.delete('friends/' + friend_id).then(({data}) => {
+        debSearchFriends(searchTerm)
+
+      }).catch((error) => {
+
+        onAuthFail(error,navigation);
+      });
+  }
+
 
   const onAuthFail = (error,navigation) => {
     if(error?.response?.status == 401){
@@ -54,33 +65,31 @@ const SearchUsers = ({ route, navigation }) => {
     }
   }
 
-  const handleChange = search => { setSearchTerm(search); debSearchUsers(search) };
+  const handleChange = search => { setSearchTerm(search); debSearchFriends(search) };
 
 
-  const renderProfileListItem = ({ item }) => (
-    <ProfileListItem username={item.name} email={item.email} id={item.id}></ProfileListItem>
+  const renderFriendListItem = ({ item }) => (
+    <FriendListItem username={item.name} email={item.email} id={item.id} removeFriend={(id) => {removeFriend(id) }}></FriendListItem>
   );
-  const renderProfileFooter = ({ item }) => (
-    <ProfileFooter data={{}}></ProfileFooter>
-  );
+  // const renderFriendFooter = ({ item }) => (
+  //   <FriendFooter data={{}}></FriendFooter>
+  // );
 
   return (
-    <ScrollView style={searchUsersStyles.container}>
-        <AppButton onPress={() => {  navigation.navigate('SearchFriends'); }} content="Current Friends"></AppButton>
-
+    <ScrollView style={SearchFriendsStyles.container}>
     <SearchBar placeholder="Search Username/Email" value={searchTerm} onChangeText={handleChange}></SearchBar>
     <FlatList
-        data={users}
-        renderItem={renderProfileListItem}
-        keyExtractor={(users) => users.id}
-        ListFooterComponent={renderProfileFooter}
+        data={friends}
+        renderItem={renderFriendListItem}
+        keyExtractor={(friends) => friends.id}
+        // ListFooterComponent={renderFriendFooter}
       />
 
     </ScrollView>
     )
 }
 
-const searchUsersStyles = StyleSheet.create({
+const SearchFriendsStyles = StyleSheet.create({
   container: {
     // flex: 1,
     // maxWidth: 400,
@@ -102,4 +111,4 @@ const searchUsersStyles = StyleSheet.create({
 
 })
 
-export default SearchUsers
+export default SearchFriends

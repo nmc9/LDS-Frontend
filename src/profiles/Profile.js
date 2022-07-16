@@ -106,7 +106,6 @@ const Profile = ({ route, navigation }) => {
 
     <AppButton onPress={() => {  navigation.navigate('SearchUsers'); }} content="Friends"></AppButton>
 
-
     </ScrollView>
     )
 }
