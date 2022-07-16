@@ -108,7 +108,6 @@ const Event = ({ route, navigation }) => {
 
 
     <FlatList
-    
       style={{padding: appPadding}}
       data={invitedUsers}
       renderItem={renderUserinvitedListItem}

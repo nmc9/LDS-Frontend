@@ -13,7 +13,7 @@ const UserInvitedHeader = ({onAccepted, onPending, onInvite, navigation}) => {
 
 
   return (
-    <Stack direction={{base:"column", sm:"row"}} rounded="lg" overflow="hidden" borderColor={primaryColor} borderWidth="2" p={appPadding} justifyContent="space-between" alignItems={{base:"start",sm:"center"}}>
+    <Stack direction={{base:"column", sm:"row"}} rounded="lg" overflow="hidden" borderColor={primaryColor} borderWidth="2" p={appPadding} justifyContent="space-between" >
 
 
     <AppButton content="Going" onPress={onAccepted}></AppButton>  
