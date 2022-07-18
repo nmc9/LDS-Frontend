@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "1.0.0",
   "main": "index.js",
-      "scripts": {
+  "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
@@ -10,8 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@expo/webpack-config": "~0.16.2",
-    "@react-native-async-storage/async-storage": "^1.17.6",
+    "@expo/webpack-config": "~0.16.21",
+    "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-community/datetimepicker": "6.1.2",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
@@ -33,7 +33,7 @@
     "react-native-safe-area-context": "4.2.4",
     "react-native-screens": "~3.11.1",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-web": "^0.17.7",
+    "react-native-web": "0.17.7",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
@@ -50,7 +50,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-native": "^4.0.0",
-    "jest": "^28.1.1",
+    "jest": "^26.6.3",
     "react-test-renderer": "^17.0.2"
   },
   "jest": {
