@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "1.0.0",
   "main": "index.js",
-    "homepage": "/public",
       "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
