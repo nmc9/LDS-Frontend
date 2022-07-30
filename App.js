@@ -18,6 +18,13 @@ import Event from './src/events/Event.js'
 import CreateEvent from './src/events/CreateEvent.js'
 import EditEvent from './src/events/EditEvent.js'
 
+import SearchBringables from './src/bringables/SearchBringables.js'
+import Bringable from './src/bringables/Bringable.js'
+import CreateBringable from './src/bringables/CreateBringable.js'
+// import EditBringable from './src/bringables/EditBringable.js'
+
+
+
 import SendInvitations from "./src/invitations/SendInvitations.js";
 
 import WebNav from "./src/WebNav";
@@ -45,6 +52,16 @@ export default function App () {
     <NavigationContainer>
     <Stack.Navigator>
 
+
+
+
+    <Stack.Screen
+    name="SearchBringables"
+    component={SearchBringables}
+    // initialParams={{ user }}
+    options={{ title: 'Search Bringables' }}
+    />   
+    
     <Stack.Screen
     name="Profile"
     component={Profile}
@@ -87,6 +104,14 @@ export default function App () {
     options={{ title: 'Create Event' }}
     />
 
+
+         <Stack.Screen
+    name="CreateBringable"
+    component={CreateBringable}
+    // initialParams={{ user }}
+    options={{ title: 'Create Bringable' }}
+    />
+
     <Stack.Screen
     name="SearchUsers"
     component={SearchUsers}
@@ -100,6 +125,8 @@ export default function App () {
     // initialParams={{ user }}
     options={{ title: 'Search Events' }}
     />   
+
+
 
     <Stack.Screen
     name="SearchFriends"

@@ -7,12 +7,12 @@ import AppButton from '../components/AppButton'
 import UserinvitedListItem from "../invitations/components/UserinvitedListItem";
 import UserInvitedHeader from "../invitations/components/UserInvitedHeader";
 
-const Event = ({ route, navigation }) => {
+const Bringable = ({ route, navigation }) => {
 
 
-  const { eventId } = route.params;
+  const { BringableId } = route.params;
 
-  const [event, setEvent] = useState(null)
+  const [Bringable, setBringable] = useState(null)
 
   const [invitedUsers,setInvitedUsers] = useState([
   ]);
@@ -21,8 +21,8 @@ const Event = ({ route, navigation }) => {
 
   useEffect(() => {
     Auth.load(() => {
-      axios.get('event/' + eventId).then(({data}) => {
-        setEvent(data.data);
+      axios.get('Bringable/' + BringableId).then(({data}) => {
+        setBringable(data.data);
 
       }).catch((error) => {
 
@@ -41,32 +41,32 @@ const Event = ({ route, navigation }) => {
     }
   }
 
-  const getEventTime = () =>{
-    if(!event?.start_datetime){
+  const getBringableTime = () =>{
+    if(!Bringable?.start_datetime){
       return ""
     }
-    return "From: " + event.start_datetime + " to " + event.end_datetime;
+    return "From: " + Bringable.start_datetime + " to " + Bringable.end_datetime;
   }
 
-  const goToEditEventPage = () => {
-    if(event?.id){
-      navigation.navigate("EditEvent",{
-        eventId: event.id,
+  const goToEditBringablePage = () => {
+    if(Bringable?.id){
+      navigation.navigate("EditBringable",{
+        BringableId: Bringable.id,
       });      
     }
   }
 
   const goToSendInvitationPage = () => {
-    if(event?.id){
+    if(Bringable?.id){
       navigation.navigate("SendInvitations",{
-        eventId: event.id,
-        eventName: event.name,
+        BringableId: Bringable.id,
+        BringableName: Bringable.name,
       });      
     }
   }
 
   const searchAccepted = () => {
-      axios.get('event/' + eventId + '/accepted').then(({data}) => {
+      axios.get('Bringable/' + BringableId + '/accepted').then(({data}) => {
         setInvitedUsers(data.data);
 
       }).catch((error) => {
@@ -76,7 +76,7 @@ const Event = ({ route, navigation }) => {
 
   }
   const searchPending = () => {
-      axios.get('event/' + eventId + '/pending').then(({data}) => {
+      axios.get('Bringable/' + BringableId + '/pending').then(({data}) => {
         setInvitedUsers(data.data);
 
       }).catch((error) => {
@@ -96,17 +96,16 @@ const Event = ({ route, navigation }) => {
 
 
   return (
-    <ScrollView style={eventStyles.container}>
-    <AppField label="Event Name" content={event?.name}></AppField>
-    <AppField label="Description" content={event?.description}></AppField>
-    <AppField label="Location" content={event?.location}></AppField>
+    <ScrollView style={BringableStyles.container}>
+    <AppField label="Bringable Name" content={Bringable?.name}></AppField>
+    <AppField label="Description" content={Bringable?.description}></AppField>
+    <AppField label="Location" content={Bringable?.location}></AppField>
 
-    <AppField label="Event Dates" content={getEventTime()}></AppField>
+    <AppField label="Bringable Dates" content={getBringableTime()}></AppField>
 
-    <AppButton content="Edit Event" onPress={goToEditEventPage}></AppButton>
+    <AppButton content="Edit Bringable" onPress={goToEditBringablePage}></AppButton>
 
 
-    <AppButton onPress={() => {  navigation.navigate('SearchBringables',{ event: event, }); }} content="Bringables"></AppButton>
 
     <FlatList
       style={{padding: appPadding}}
@@ -120,7 +119,7 @@ const Event = ({ route, navigation }) => {
     )
 }
 
-const eventStyles = StyleSheet.create({
+const BringableStyles = StyleSheet.create({
   container: {
     // flex: 1,
     // maxWidth: 400,
@@ -142,4 +141,4 @@ const eventStyles = StyleSheet.create({
 
 })
 
-export default Event
+export default Bringable
