@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { StyleSheet, Text, View, Button, TextInput, Pressable,ScrollView,FlatList } from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput, Pressable,ScrollView,FlatList,setState } from 'react-native'
 import appStyles, {appPadding,appMargin,primaryColor} from '../appStyles'
 import AppField from '../components/AppField'
 import AppInput from '../components/AppInput'
@@ -18,48 +18,46 @@ const SearchBringable = ({ route, navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [bringable,setBringable] = useState([]);
 
-  const event = {
-    description: "sdfsdfsdfs",
-    end_datetime: "2022-01-01 10:10:10",
-    id: 21,
-    location: "fdsdfsdfs",
-    name: "sf",
-    owner_id: 27,
-    start_datetime: "2022-01-01 10:10:10"
-  } //route.params;
+  const { event } = route.params 
+  //  {
+  //   description: "sdfsdfsdfs",
+  //   end_datetime: "2022-01-01 10:10:10",
+  //   id: 21,
+  //   location: "fdsdfsdfs",
+  //   name: "sf",
+  //   owner_id: 27,
+  //   start_datetime: "2022-01-01 10:10:10"
+  // } //route.params;
 
-  const [assigned, setAssigned] = useState(0);
+  const [assigned, setAssigned] = useState(false);
   const [acquired, setAcquired] = useState("all");
 
-  const applyFilters = (acquired,assigned) => {
-    setAssigned(assigned);
-    setAcquired(acquired);
-    console.log(assigned,acquired,"ASDASD");
-
+  const applyFilters = (acq,ass) => {
+    setAssigned(ass);
+    setAcquired(acq);
   }
-
 
   const [errors, setErrors] = useState({})
 
 
   useEffect(() => {
     Auth.load(() => {
-      searchAllBringables(null,acquired);
+      searchAllBringables(null);
     })
   },[])
 
   const debSearchBringable = useCallback(debounce(query => {
-    searchAllBringables(query);
-  }, 400), [])
+    if(assigned){
+      searchCurrentUserBringables(query)
+    }else{
+      searchAllBringables(query);
+    }
+  }, 400), [assigned,acquired])
 
-
-  const triggerSearch = (value) => {
-
-  }
 
 
   const searchAllBringables = (value) => {
-    console.log(acquired,assigned,"POPO");
+    console.log(acquired,"VALUE");
     let url = getSearchUrl(event.id,null,value,acquired);
     axios.get(url).then(({data}) => {
       setBringable(data.data);
@@ -70,11 +68,11 @@ const SearchBringable = ({ route, navigation }) => {
     });
   }
 
-const searchCurrentUserBringables = (value) => {
-  Auth.getUser().then(({user}) => {
-        searchUserBringables(value,user);
-  })
-}
+  const searchCurrentUserBringables = (value) => {
+    Auth.getUser().then((user) => {
+      searchUserBringables(value,JSON.parse(user));
+    })
+  }
 
   const searchUserBringables = (value, user) => {
     let url = getSearchUrl(event.id,user.id,value,acquired);
@@ -87,30 +85,30 @@ const searchCurrentUserBringables = (value) => {
     });
   }
 
-  const getSearchUrl = (event_id,user_id,value,acq) => {
-    console.log(acq)
-    let ac = null;
-    if(acq == "notacquired"){
-      ac = 0;
-    } else if(acq == "acquired"){
-      ac = 1;
+  const getSearchUrl = (event_id,user_id,value,acquired) => {
+    console.log("X",event_id,user_id,value,acquired)
+    let acq = null;
+    if(acquired == "notacquired"){
+      acq = 0;
+    } else if(acquired == "acquired"){
+      acq = 1;
     }
     let base = 'event/' + event_id;
     if(user_id){
-     base += '/user' + user_id;
-   }
-   base += "/bringable";
-   if(value && acq != null){
-    base += "?search=" + value + "&acquired=" + ac
-  }else if(value){
-    base += "?search=" + value
-  }else if(acq != null){
-    base += "?acquired=" + acquired
+      base += '/user/' + user_id;
+    }
+    base += "/bringable";
+    if(value && acq != null){
+      base += "?search=" + value + "&acquired=" + acq
+    }else if(value){
+      base += "?search=" + value
+    }else if(acq != null){
+      base += "?acquired=" + acq
+    }
+    console.log(base)
+    return base;
+
   }
-
-  return base;
-
-}
 
 const onAuthFail = (error,navigation) => {
   if(error?.response?.status == 401){
@@ -119,24 +117,28 @@ const onAuthFail = (error,navigation) => {
   }
 }
 
-const handleChange = search => { setSearchTerm(search); debSearchBringable(search) };
+const handleChange = search => { 
+  console.log("assigned: " + assigned +  ", Acquired: " + acquired +  ", Search: " + searchTerm);
+
+  setSearchTerm(search); 
+  debSearchBringable(search) 
+};
 
 
 const renderBringableListItem = ({ item }) => (
   <BringableListItem bringable={item} navigation={navigation}></BringableListItem>
   );
 
-  const renderBringableFooter = ({ item }) => (
+const renderBringableFooter = ({ item }) => (
   <BringableFooter data={{}} navigation={navigation}></BringableFooter>
   );
 
-  const renderBringableHeader = ({ item }) => (
-  <BringableHeader assigned={assigned} acquired={acquired} onApply={ (acquired,assigned) => applyFilters(acquired,assigned) } navigation={navigation}></BringableHeader>
-  );
+const renderBringableHeader = ({ item }) => (
+  <BringableHeader onPress={() => debSearchBringable(searchTerm)} assigned={assigned} acquired={acquired} onApply={ (acquired,assigned) => applyFilters(acquired,assigned) } navigation={navigation}></BringableHeader>
+);
 
-  return (
+return (
   <ScrollView style={SearchBringableStyles.container}>
-
   <VStack space={1} mt="2" alignItems="center">
   <Heading>Bringables for { event.name }</Heading>
   </VStack>

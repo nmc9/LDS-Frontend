@@ -8,7 +8,7 @@ import AppInput from "../../components/AppInput";
 import appStyles, {appPadding, appMargin, primaryColor} from '../../appStyles'
 
 
-const BringableHeader = ({acquired, assigned,onApply, navigation}) => {
+const BringableHeader = ({acquired, assigned,onApply, onPress, navigation}) => {
 
     return (
       <View style={BringableHeaderStyles.container}>
@@ -39,6 +39,8 @@ const BringableHeader = ({acquired, assigned,onApply, navigation}) => {
         <Text>Only Assigned To Me</Text>
         <Switch value={assigned} onValueChange={() => onApply(acquired,!assigned)} />
       </HStack>
+  <AppButton content="Apply Filter" onPress={onPress}></AppButton>
+
 
 
       </Stack>

@@ -53,6 +53,12 @@ export default function App () {
     <Stack.Navigator>
 
 
+    <Stack.Screen
+    name="Profile"
+    component={Profile}
+    // initialParams={{ user }}
+    options={{ title: 'Profile' }}
+    />
 
 
     <Stack.Screen
@@ -62,12 +68,6 @@ export default function App () {
     options={{ title: 'Search Bringables' }}
     />   
     
-    <Stack.Screen
-    name="Profile"
-    component={Profile}
-    // initialParams={{ user }}
-    options={{ title: 'Profile' }}
-    />
 
     <Stack.Screen
     name="Login"
