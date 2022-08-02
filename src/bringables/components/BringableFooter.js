@@ -8,15 +8,11 @@ import AppInput from "../../components/AppInput";
 import appStyles, {appPadding, appMargin, primaryColor} from '../../appStyles'
 
 
-const BringableFooter = ({navigation}) => {
+const BringableFooter = ({onPress,navigation}) => {
 
   const [imaginaryEmail,setImaginaryEmail] = useState([]);
 
   const [wasCreated,setWasCreated] = useState(false);
-
-  const goToCreateBringable = () => {
-      navigation.navigate("CreateBringable");
-  }
 
 
     return (
@@ -32,7 +28,7 @@ const BringableFooter = ({navigation}) => {
         <Divider my="2" />
 
         <HStack space={2} justifyContent="space-evenly">
-            <AppButton buttonStyle={{margin:0}} content="Create Bringable" onPress={goToCreateBringable}>
+            <AppButton buttonStyle={{margin:0}} content="Create Bringable" onPress={onPress}>
             </AppButton>    
           <View></View>
         </HStack>

@@ -17,10 +17,25 @@ const BringableListItem = ({ bringable, navigation }) => {
     });
   }
 
-  const goToEditBringablePage = () => {
-    navigation.navigate("EditBringable",{
+  const goToManageBringablePage = () => {
+    navigation.navigate("ManageBrinable",{
       BringableId: bringable.id,
     });
+  }
+
+  const getImportanceString = (level) => {
+    let x = constants.bringable_levels[level];
+    return x != null ? x : constants.bringable_levels[4]
+  }
+
+  const getAssignedToString = (items) => {
+    if(items == null || items.length < 1){
+      return "Unassigned";
+    }
+    if(items.length > 1){
+      return "Multiple";
+    }
+    return items[0]?.assigned?.name
   }
 
 
@@ -28,30 +43,55 @@ const BringableListItem = ({ bringable, navigation }) => {
     <Box p="3">
       <Box p="3" rounded="lg" overflow="hidden" borderColor="coolGray.500" borderWidth="2">
         <Stack p="4" space={3}>
+
+        <HStack space={3} justifyContent="space-between">
           <Heading size="md" ml="-1">
           { bringable.name }
           </Heading>
-          <Text>
-          {bringable.description}
-          </Text>
-        </Stack>
-        <Divider my="2" />
-        <HStack my="4" space={2} justifyContent="center" alignItems="center">
-          <Heading size="sm" ml="-1">
-          { bringable.location }
+{/*          <Text>{JSON.stringify(bringable)}</Text>
+*/}          <Heading size="md" mr="-1">
+          { getImportanceString(bringable.importance) }
           </Heading>
         </HStack>
+        </Stack>
+        <Divider mb="2" />
+        
+        {
+        bringable.required_count > 0 ?
+        <HStack ml="4" space={2} justifyContent="start" alignItems="center">
+          <Heading size="sm" style={{textAlign: 'start'}}>Required</Heading>
+          <Text>:</Text>
+          <Text style={{textAlign: 'center'}}>{ bringable.required_count }</Text>
+        </HStack> : null 
+        }
+
+        {
+        bringable.required_count == 1 ?
+        <HStack ml="4" space={2} justifyContent="start" alignItems="center">
+          <Heading size="sm" style={{textAlign: 'start'}}>Acquired</Heading>
+          <Text>:</Text>
+          { bringable.acquired_all ? <Heading size="sm">YES</Heading> : <Heading size="sm">NO</Heading>}
+        </HStack>        
+        :
+        <HStack ml="4" space={2} justifyContent="start" alignItems="center">
+          <Heading size="sm" style={{textAlign: 'start'}}>Acquired</Heading>
+          <Text>:</Text>
+          <Text style={{textAlign: 'center'}}>{ bringable.acquired_count }</Text>
+          { bringable.acquired_all ? <Heading size="sm">ALL ITEMS ACQUIRED</Heading> : null}
+        </HStack>
+        }
         <Divider my="2" />
-        <HStack my="4" space={2} justifyContent="center" alignItems="center">
-          <Text style={{textAlign: 'center'}}>{ bringable.time_frame_text?.start }</Text>
-          <Text> - </Text>
-          <Text style={{textAlign: 'center'}}>{ bringable.time_frame_text?.end }</Text>
+        <HStack ml="4" space={2} justifyContent="start" alignItems="center">
+          <Heading size="sm" style={{textAlign: 'start'}}>Assigned To</Heading>
+          <Text>:</Text>
+          <Text style={{textAlign: 'center'}}>{ getAssignedToString(bringable.items) }</Text>
         </HStack>
         <Divider my="2" />
+
         <HStack space={2} justifyContent="space-evenly">
-            <AppButton buttonStyle={{margin:0}} content="View Bringable" onPress={goToBringablePage}>
+{/*            <AppButton buttonStyle={{margin:0}} content="View Bringable" onPress={goToBringablePage}>
             </AppButton>    
-          <AppButton buttonStyle={{margin:0}} content="Manage Bringable" onPress={goToEditBringablePage}>
+*/}          <AppButton buttonStyle={{margin:0}} content="Manage Bringable" onPress={goToManageBringablePage}>
             </AppButton>  
         </HStack>
       </Box>

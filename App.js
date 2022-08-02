@@ -21,7 +21,7 @@ import EditEvent from './src/events/EditEvent.js'
 import SearchBringables from './src/bringables/SearchBringables.js'
 import Bringable from './src/bringables/Bringable.js'
 import CreateBringable from './src/bringables/CreateBringable.js'
-// import EditBringable from './src/bringables/EditBringable.js'
+import ManageBrinable from './src/bringables/ManageBringable.js'
 
 
 
@@ -53,6 +53,8 @@ export default function App () {
     <Stack.Navigator>
 
 
+
+
     <Stack.Screen
     name="Profile"
     component={Profile}
@@ -60,14 +62,6 @@ export default function App () {
     options={{ title: 'Profile' }}
     />
 
-
-    <Stack.Screen
-    name="SearchBringables"
-    component={SearchBringables}
-    // initialParams={{ user }}
-    options={{ title: 'Search Bringables' }}
-    />   
-    
 
     <Stack.Screen
     name="Login"
@@ -111,6 +105,15 @@ export default function App () {
     // initialParams={{ user }}
     options={{ title: 'Create Bringable' }}
     />
+
+
+        <Stack.Screen
+    name="SearchBringables"
+    component={SearchBringables}
+    // initialParams={{ user }}
+    options={{ title: 'Search Bringables' }}
+    />   
+
 
     <Stack.Screen
     name="SearchUsers"

@@ -18,8 +18,10 @@ const SearchBringable = ({ route, navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [bringable,setBringable] = useState([]);
 
-  const { event } = route.params 
-  //  {
+  const { event, refresh } = route.params
+
+
+  // {
   //   description: "sdfsdfsdfs",
   //   end_datetime: "2022-01-01 10:10:10",
   //   id: 21,
@@ -27,7 +29,7 @@ const SearchBringable = ({ route, navigation }) => {
   //   name: "sf",
   //   owner_id: 27,
   //   start_datetime: "2022-01-01 10:10:10"
-  // } //route.params;
+  // } //;
 
   const [assigned, setAssigned] = useState(false);
   const [acquired, setAcquired] = useState("all");
@@ -35,6 +37,10 @@ const SearchBringable = ({ route, navigation }) => {
   const applyFilters = (acq,ass) => {
     setAssigned(ass);
     setAcquired(acq);
+  }
+
+  const goToCreateBringable = () => {
+    navigation.navigate('CreateBringable',{ event: event, })
   }
 
   const [errors, setErrors] = useState({})
@@ -57,7 +63,6 @@ const SearchBringable = ({ route, navigation }) => {
 
 
   const searchAllBringables = (value) => {
-    console.log(acquired,"VALUE");
     let url = getSearchUrl(event.id,null,value,acquired);
     axios.get(url).then(({data}) => {
       setBringable(data.data);
@@ -86,7 +91,6 @@ const SearchBringable = ({ route, navigation }) => {
   }
 
   const getSearchUrl = (event_id,user_id,value,acquired) => {
-    console.log("X",event_id,user_id,value,acquired)
     let acq = null;
     if(acquired == "notacquired"){
       acq = 0;
@@ -105,7 +109,6 @@ const SearchBringable = ({ route, navigation }) => {
     }else if(acq != null){
       base += "?acquired=" + acq
     }
-    console.log(base)
     return base;
 
   }
@@ -118,7 +121,6 @@ const onAuthFail = (error,navigation) => {
 }
 
 const handleChange = search => { 
-  console.log("assigned: " + assigned +  ", Acquired: " + acquired +  ", Search: " + searchTerm);
 
   setSearchTerm(search); 
   debSearchBringable(search) 
@@ -130,7 +132,7 @@ const renderBringableListItem = ({ item }) => (
   );
 
 const renderBringableFooter = ({ item }) => (
-  <BringableFooter data={{}} navigation={navigation}></BringableFooter>
+  <BringableFooter onPress={goToCreateBringable} data={{}} navigation={navigation}></BringableFooter>
   );
 
 const renderBringableHeader = ({ item }) => (
@@ -146,7 +148,7 @@ return (
   <Box style={{flex:1}} >
   <SearchBar placeholder="Search Bringable" value={searchTerm} onChangeText={handleChange}></SearchBar>
   </Box>
-  <AppButton content="Create Bringable" onPress={ () => {navigation.navigate("CreateBringable");}  }></AppButton>
+  <AppButton content="Create Bringable" onPress={goToCreateBringable}></AppButton>
 
   </HStack>
 

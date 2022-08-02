@@ -39,7 +39,7 @@ const BringableHeader = ({acquired, assigned,onApply, onPress, navigation}) => {
         <Text>Only Assigned To Me</Text>
         <Switch value={assigned} onValueChange={() => onApply(acquired,!assigned)} />
       </HStack>
-  <AppButton content="Apply Filter" onPress={onPress}></AppButton>
+      <AppButton content="Apply Filter" onPress={onPress}></AppButton>
 
 
 

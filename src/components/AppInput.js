@@ -1,5 +1,6 @@
 import { TextInput, Text, View } from 'react-native'
 import { useState } from 'react'
+import {HStack,Box,Select,Heading} from 'native-base'
 
 import appStyles from '../appStyles'
 
@@ -18,20 +19,28 @@ const AppInput = (props) => {
   }
 
   return <View style={computedWrapperStyle()}>
-  <TextInput
-  style={computedTextInputStyle()}
-  onChangeText={ props.onChangeText}
-  onFocus={props.onFocus}
-  onBlur={props.onBlur}
-  value={props.value}
-  placeholder={props.placeholder}
-  textContentType={props.textContentType}
-  autoComplete={props.autoComplete}
-  keyboardType={props.keyboardType}
-  secureTextEntry={props.secureTextEntry}
-  dataDetectorTypes={props.dataDetectorTypes}
-  />
-  {props.error && props.error.length ? (<Text style={appStyles.appInputError}>{props.error}</Text>) : null }
+
+  <HStack m="4" space={2} justifyContent="start" alignItems="center">
+    <Heading size="sm" style={{textAlign: 'start', width:150 }}>{ props.placeholder }:</Heading>
+    <Box style={{flex:1}} >
+      <TextInput
+      style={computedTextInputStyle()}
+      onChangeText={ props.onChangeText}
+      onFocus={props.onFocus}
+      onBlur={props.onBlur}
+      value={props.value}
+      placeholder={props.placeholder}
+      textContentType={props.textContentType}
+      autoComplete={props.autoComplete}
+      keyboardType={props.keyboardType}
+      secureTextEntry={props.secureTextEntry}
+      dataDetectorTypes={props.dataDetectorTypes}
+      />
+      {props.error && props.error.length ? (<Text style={appStyles.appInputError}>{props.error}</Text>) : null }
+    </Box>
+  </HStack>     
+
+
   </View>
 }
 

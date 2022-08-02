@@ -4,8 +4,10 @@ import { Platform } from 'react-native'
 
 import Auth from "./Auth";
 window.Auth = Auth;
-
 Auth.load();
+
+import constants from "./constants"
+window.constants = constants;
 
 window.getPlatform = () => {
 	return Platform.select({

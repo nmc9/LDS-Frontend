@@ -4,7 +4,7 @@ import appStyles from '../appStyles'
 import AppButton from '../components/AppButton'
 import AppInput from '../components/AppInput'
 import AppField from '../components/AppField'
-import { Select } from 'native-base'
+import { Select, Heading,HStack,VStack,Box,Switch } from 'native-base'
 
 
 import CrossPlatformDatePicker from "../components/CrossPlatformDatePicker"
@@ -12,28 +12,22 @@ import CrossPlatformDatePicker from "../components/CrossPlatformDatePicker"
 const CreateBringable = ({ route, navigation }) => {
   const data = {
     'name':'',
-    'notes':null,
+    'notes':"",
     'importance':4,
     'assigned_id':null,
     'required': 0,
     'acquired': 0,
   }
+  const [requriedOn,setRequiredOn] = useState(0); 
 
-  const [assignedUser,setAssignedUser] = useState(null);
+  const [assignedUser,setAssignedUser] = useState("-1");
+  const [importance, setImportance] = useState("4");
   const [form, setForm] = useState(data)
   const [errors, setErrors] = useState({})
 
   const [group, setGroup] = useState([]);
 
-  const event = {
-    description: "sdfsdfsdfs",
-    end_datetime: "2022-01-01 10:10:10",
-    id: 21,
-    location: "fdsdfsdfs",
-    name: "sf",
-    owner_id: 27,
-    start_datetime: "2022-01-01 10:10:10"
-  } //route.params;
+  const { event } = route.params;
 
   useEffect(() => {
     setErrors({});
@@ -64,23 +58,6 @@ const CreateBringable = ({ route, navigation }) => {
     })
   }
 
-  const axiosCreateBringable = (data) => {
-    form.assigned_id = assignedUser;
-    axios.post('/api/event/' + event.id + '/bringable/',form)    
-    .then(({ data }) => {
-
-      console.log(data);
-      console.log(data.data.id)
-
-      navigation.navigate('SearchBringables',{
-        eventId: data.data.id,
-      });
-
-    }).catch((error) => {
-      onErrors(error,setErrors);
-    })
-  }
-
   const onErrors = (error, setErrorCallback) => {
     const _errors = error?.response?.data?.errors
     if (_errors) {
@@ -93,18 +70,25 @@ const CreateBringable = ({ route, navigation }) => {
   }
 
   const onSubmit = () => {
+    let _form = {
+      name:form.name,
+      notes: form.notes === "" ? null : form.notes,
+      importance: importance,
+      assigned_id: assignedUser > 0 ? assignedUser : null,
+      acquired:form.acquired,
+      required: !requriedOn ? form.required : -1,
 
-    axios.post('Bringable', form)
+    };
+    axios.post('/event/' + event.id + '/bringable/', _form)
     .then(({ data }) => {
 
-      console.log(data);
-      console.log(data.data.id)
-
-      navigation.navigate('Bringable',{
-        BringableId: data.data.id,
+      navigation.navigate('SearchBringables',{
+        event: event
       });
 
     }).catch((error) => {
+              alert(error);
+
       onErrors(error,setErrors);
     })
   }
@@ -128,52 +112,70 @@ const CreateBringable = ({ route, navigation }) => {
     ></AppInput>
 
     <AppInput
-    error={errors.description}
-    onChangeText={(e) => setForm({ ...form, description: e })}
-    value={form.description}
-    placeholder="Bringable Details"
+    error={errors.notes}
+    onChangeText={(e) => setForm({ ...form, notes: e })}
+    value={form.notes}
+    placeholder="Bringable Notes"
     ></AppInput>
+
+
+    <HStack m="4" space={2} justifyContent="start" alignItems="center">
+      <Heading size="sm" style={{textAlign: 'start', width:150 }}>Importance:</Heading>
+      <Box style={{flex:1}} >
+      <Select m="2" selectedValue={importance} minWidth="200" accessibilityLabel="Assign User" onValueChange={itemValue => { setImportance(itemValue)}}>
+        <Select.Item label="Required" value="1"/>
+        <Select.Item label="Important" value="2"/>
+        <Select.Item label="Useful" value="3"/>
+        <Select.Item label="Optional" value="4"/>
+
+      </Select>
+      </Box>
+    </HStack>     
+
+
+
+    <VStack space={0}>
+      {!requriedOn ? 
+      <AppInput
+      error={errors.required}
+      onChangeText={(e) => setForm({ ...form, required: e })}
+      value={form.required}
+      placeholder="Number of Required"
+      ></AppInput>
+      :
+      null }
+      <HStack mx="4" mt="3" alignItems="center" justifyContent="center">
+        <Heading size="sm" style={{textAlign: 'start', width:150 }}>Any Amount</Heading>
+          <Switch value={requriedOn} onValueChange={() => setRequiredOn(!requriedOn)} />
+      </HStack>
+    </VStack>
 
 
     <AppInput
-    error={errors.location}
-    onChangeText={(e) => setForm({ ...form, location: e })}
-    value={form.location}
-    placeholder="Where is it?"
-    ></AppInput>
-
-    <AppInput
-    error={errors.start_datetime}
-    onChangeText={(e) => setForm({ ...form, start_datetime: e })}
-    value={form.start_datetime}
-    placeholder="Start Date Ex: (2022-12-12 12:01:01)"
-    ></AppInput>
-
-    <AppInput
-    error={errors.end_datetime}
-    onChangeText={(e) => setForm({ ...form, end_datetime: e })}
-    value={form.end_datetime}
-    placeholder="End Date Ex: (2022-12-12 12:01:01)"
+    error={errors.acquired}
+    onChangeText={(e) => setForm({ ...form, acquired: e })}
+    value={form.acquired}
+    placeholder="Number already Acquired"
     ></AppInput>
 
 
-    <Select selectedValue={assignedUser} minWidth="200" accessibilityLabel="Assign User" placeholder="Assign User" onValueChange={itemValue => { itemValue > 0 ? setAssignedUser(itemValue) : setAssignedUser(null)}}>
-    <Select.Item label="Unassigned" value={-1} />
-      {group.map(r => <Select.Item key={r.id} label={r.email} value={r.id} />)}
-    </Select>
 
-    <Text>{ assignedUser}</Text>
-
+    <HStack m="4" space={2} justifyContent="start" alignItems="center">
+      <Heading size="sm" style={{textAlign: 'start', width:150 }}>Assigned To:</Heading>
+      <Box style={{flex:1}} >
+        <Select selectedValue={assignedUser} minWidth="200" accessibilityLabel="Assign User" onValueChange={itemValue => { setAssignedUser(itemValue) }}>
+        <Select.Item label="Unassigned" value={"-1"} />
+          {group.map(r => <Select.Item key={r.id} label={r.email} value={r.id + ""} />)}
+        </Select>
+      </Box>
+    </HStack>        
 
 
     <View style={createBringableStyles.buttonHolder}>
-    <AppButton content="Clear" onPress={onClear}>
-    </AppButton>
+
     <AppButton content="Create Bringable" onPress={onSubmit}>
     </AppButton>
 
-    <AppButton content="Return To Profile" onPress={goToProfile}>
-    </AppButton>
 
     </View>
     </ScrollView>

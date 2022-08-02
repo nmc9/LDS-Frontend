@@ -2,6 +2,7 @@ import { TextInput, Text, View, ActivityIndicator } from 'react-native'
 import { useState } from 'react'
 
 import appStyles, {spinnerColor} from '../appStyles'
+import {HStack,Box,Select,Heading} from 'native-base'
 
 const AppField = (props) => {
 
@@ -10,12 +11,17 @@ const AppField = (props) => {
   }
 
   return <View style={computedWrapperStyle()}>
-  <View style={appStyles.appFieldLabelView} >
-    <Text style={appStyles.appFieldLabel}>{props.label}</Text>
-  </View>
 
 
-  {props.content ? <Text style={appStyles.appFieldContent}>{props.content}</Text> : <ActivityIndicator style={appStyles.appFieldLoading} color={spinnerColor}/> }
+  <HStack m="4" space={2} justifyContent="start" alignItems="center">
+    <Heading size="sm" style={{textAlign: 'start', width:150 }}>{props.label}:</Heading>
+    <Box style={{flex:1}} >
+  {props.content ? <Text>{props.content}</Text> : <ActivityIndicator style={appStyles.appFieldLoading} color={spinnerColor}/> }
+
+    </Box>
+  </HStack>     
+
+
   </View>
 }
 

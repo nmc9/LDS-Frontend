@@ -101,7 +101,7 @@ export default StyleSheet.create({
     padding:10,
     borderRadius:6,
     borderWidth:2,
-    borderTopStartRadius:0,
+    // borderTopStartRadius:0,
     color: primaryColor,
     borderColor: primaryColor,
   },
