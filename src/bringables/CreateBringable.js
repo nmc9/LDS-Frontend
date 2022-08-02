@@ -51,7 +51,11 @@ const CreateBringable = ({ route, navigation }) => {
     axios.get('event/' + event.id + '/accepted')
     .then(({ data }) => {
 
-          setGroup(data.data);
+      Auth.getUser().then((user) => {
+        let users = data.data;
+        users.unshift(JSON.parse(user));
+        setGroup(users);
+      })
 
     }).catch((error) => {
       onErrors(error,setErrors);
