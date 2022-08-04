@@ -44,7 +44,7 @@ const SearchFriends = ({ route, navigation }) => {
 
 
   const SearchFriends = (value) => {
-      axios.get('search/friends?search=' + value).then(({data}) => {
+      axios.get('search/friend?search=' + value).then(({data}) => {
         setFriends(data.data);
 
       }).catch((error) => {
@@ -54,7 +54,7 @@ const SearchFriends = ({ route, navigation }) => {
   }
 
   const removeFriend = (friend_id) => {
-      axios.delete('friends/' + friend_id).then(({data}) => {
+      axios.delete('friend/' + friend_id).then(({data}) => {
         debSearchFriends(searchTerm)
 
       }).catch((error) => {

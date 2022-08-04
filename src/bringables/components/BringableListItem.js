@@ -48,8 +48,7 @@ const BringableListItem = ({ bringable, navigation }) => {
           <Heading size="md" ml="-1">
           { bringable.name }
           </Heading>
-{/*          <Text>{JSON.stringify(bringable)}</Text>
-*/}          <Heading size="md" mr="-1">
+          <Heading size="md" mr="-1">
           { getImportanceString(bringable.importance) }
           </Heading>
         </HStack>
@@ -58,8 +57,8 @@ const BringableListItem = ({ bringable, navigation }) => {
         
         {
         bringable.required_count > 0 ?
-        <HStack ml="4" space={2} justifyContent="start" alignItems="center">
-          <Heading size="sm" style={{textAlign: 'start'}}>Required</Heading>
+        <HStack ml="4" space={2} justifyContent="flex-start" alignItems="center">
+          <Heading size="sm" style={{textAlign: 'left'}}>Required</Heading>
           <Text>:</Text>
           <Text style={{textAlign: 'center'}}>{ bringable.required_count }</Text>
         </HStack> : null 
@@ -67,31 +66,28 @@ const BringableListItem = ({ bringable, navigation }) => {
 
         {
         bringable.required_count == 1 ?
-        <HStack ml="4" space={2} justifyContent="start" alignItems="center">
-          <Heading size="sm" style={{textAlign: 'start'}}>Acquired</Heading>
+        <HStack ml="4" space={2} justifyContent="flex-start" alignItems="center">
+          <Heading size="sm" style={{textAlign: 'left'}}>Acquired</Heading>
           <Text>:</Text>
           { bringable.acquired_all ? <Heading size="sm">YES</Heading> : <Heading size="sm">NO</Heading>}
         </HStack>        
         :
-        <HStack ml="4" space={2} justifyContent="start" alignItems="center">
-          <Heading size="sm" style={{textAlign: 'start'}}>Acquired</Heading>
+        <HStack ml="4" space={2} justifyContent="flex-start" alignItems="center">
+          <Heading size="sm" style={{textAlign: 'left'}}>Acquired</Heading>
           <Text>:</Text>
           <Text style={{textAlign: 'center'}}>{ bringable.acquired_count }</Text>
           { bringable.acquired_all ? <Heading size="sm">ALL ITEMS ACQUIRED</Heading> : null}
         </HStack>
         }
         <Divider my="2" />
-        <HStack ml="4" space={2} justifyContent="start" alignItems="center">
-          <Heading size="sm" style={{textAlign: 'start'}}>Assigned To</Heading>
-          <Text>:</Text>
+        <HStack ml="4" space={2} justifyContent="flex-start" alignItems="center">
+          <Heading size="sm" style={{textAlign: 'left'}}>Assigned To:</Heading>
           <Text style={{textAlign: 'center'}}>{ getAssignedToString(bringable.items) }</Text>
         </HStack>
         <Divider my="2" />
 
         <HStack space={2} justifyContent="space-evenly">
-{/*            <AppButton buttonStyle={{margin:0}} content="View Bringable" onPress={goToBringablePage}>
-            </AppButton>    
-*/}          <AppButton buttonStyle={{margin:0}} content="Manage Bringable" onPress={goToManageBringablePage}>
+          <AppButton buttonStyle={{margin:0}} content="Manage Bringable" onPress={goToManageBringablePage}>
             </AppButton>  
         </HStack>
       </Box>

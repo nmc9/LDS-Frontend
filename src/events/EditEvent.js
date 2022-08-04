@@ -63,7 +63,6 @@ const EditEvent = ({ route, navigation }) => {
   }
 
   const onSubmit = () => {
-    // axios.post('event/', form)
     axios.put('event/' + form.id, form)
     .then(({ data }) => {
 
@@ -87,7 +86,6 @@ const EditEvent = ({ route, navigation }) => {
 
     <AppField label="Event Name" content={event?.name}></AppField>
 
-    <Heading fontSize="md"  pl={appPadding} >Event Details</Heading>
     <AppInput
     error={errors.description}
     onChangeText={(e) => setForm({ ...form, description: e })}
@@ -95,7 +93,6 @@ const EditEvent = ({ route, navigation }) => {
     placeholder="Event Details"
     ></AppInput>
 
-    <Heading fontSize="md"  pl={appPadding} >Where is it?</Heading>
     <AppInput
     error={errors.location}
     onChangeText={(e) => setForm({ ...form, location: e })}
@@ -103,7 +100,6 @@ const EditEvent = ({ route, navigation }) => {
     placeholder="Where is it?"
     ></AppInput>
 
-    <Heading fontSize="md"  pl={appPadding} >Start Date Ex: (2022-12-12 12:01:01)</Heading>
     <AppInput
     error={errors.start_datetime}
     onChangeText={(e) => setForm({ ...form, start_datetime: e })}
@@ -111,7 +107,6 @@ const EditEvent = ({ route, navigation }) => {
     placeholder="Start Date Ex: (2022-12-12 12:01:01)"
     ></AppInput> 
 
-    <Heading fontSize="md"  pl={appPadding} >End Date Ex: (2022-12-12 12:01:01)</Heading>
     <AppInput
     error={errors.end_datetime}
     onChangeText={(e) => setForm({ ...form, end_datetime: e })}

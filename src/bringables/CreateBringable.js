@@ -123,8 +123,8 @@ const CreateBringable = ({ route, navigation }) => {
     ></AppInput>
 
 
-    <HStack m="4" space={2} justifyContent="start" alignItems="center">
-      <Heading size="sm" style={{textAlign: 'start', width:150 }}>Importance:</Heading>
+    <HStack m="4" space={2} justifyContent="flex-start" alignItems="center">
+      <Heading size="sm" style={{textAlign: 'left', width:150 }}>Importance:</Heading>
       <Box style={{flex:1}} >
       <Select m="2" selectedValue={importance} minWidth="200" accessibilityLabel="Assign User" onValueChange={itemValue => { setImportance(itemValue)}}>
         <Select.Item label="Required" value="1"/>
@@ -149,7 +149,7 @@ const CreateBringable = ({ route, navigation }) => {
       :
       null }
       <HStack mx="4" mt="3" alignItems="center" justifyContent="center">
-        <Heading size="sm" style={{textAlign: 'start', width:150 }}>Any Amount</Heading>
+        <Heading size="sm" style={{textAlign: 'left', width:150 }}>Any Amount</Heading>
           <Switch value={requriedOn} onValueChange={() => setRequiredOn(!requriedOn)} />
       </HStack>
     </VStack>
@@ -164,8 +164,8 @@ const CreateBringable = ({ route, navigation }) => {
 
 
 
-    <HStack m="4" space={2} justifyContent="start" alignItems="center">
-      <Heading size="sm" style={{textAlign: 'start', width:150 }}>Assigned To:</Heading>
+    <HStack m="4" space={2} justifyContent="flex-start" alignItems="center">
+      <Heading size="sm" style={{textAlign: 'left', width:150 }}>Assigned To:</Heading>
       <Box style={{flex:1}} >
         <Select selectedValue={assignedUser} minWidth="200" accessibilityLabel="Assign User" onValueChange={itemValue => { setAssignedUser(itemValue) }}>
         <Select.Item label="Unassigned" value={"-1"} />

@@ -116,7 +116,9 @@ export default StyleSheet.create({
   },
 
   appInputWrapper:{
-    height: 80,
+    minHeight: 80,
+    minWidth: 120,
+
     // backgroundColor:'green',
     // borderColor: 'yellow',
     // borderWidth: 3.

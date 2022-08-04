@@ -3,11 +3,13 @@
     "name": "LetsDoStuff",
     "slug": "letsdostuff",
     "version": "1.0.1",
+    "icon": "./assets/appstore.png",
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
-      "package": "com.ldsapp"
+      "package": "com.ldsapp",
+      "versionCode": 1
     }
   }
 }

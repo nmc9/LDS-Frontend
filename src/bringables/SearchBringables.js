@@ -149,7 +149,7 @@ const renderBringableHeader = ({ item }) => (
 return (
   <ScrollView style={SearchBringableStyles.container}>
   <VStack space={1} mt="2" alignItems="center">
-  <Heading>Bringables for { event.name }</Heading>
+  <Heading><Text>Bringables for { event.name }</Text></Heading>
   </VStack>
   <HStack alignItems="center" >
   <Box style={{flex:1}} >

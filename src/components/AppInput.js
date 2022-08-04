@@ -20,8 +20,8 @@ const AppInput = (props) => {
 
   return <View style={computedWrapperStyle()}>
 
-  <HStack m="4" space={2} justifyContent="start" alignItems="center">
-    <Heading size="sm" style={{textAlign: 'start', width:150 }}>{ props.placeholder }:</Heading>
+  <HStack m="4" space={2} justifyContent="flex-start" alignItems="center">
+    <Heading size="sm" style={{textAlign: 'left', width:150 }}>{ props.placeholder }:</Heading>
     <Box style={{flex:1}} >
       <TextInput
       style={computedTextInputStyle()}

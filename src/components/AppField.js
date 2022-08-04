@@ -13,8 +13,8 @@ const AppField = (props) => {
   return <View style={computedWrapperStyle()}>
 
 
-  <HStack m="4" space={2} justifyContent="start" alignItems="center">
-    <Heading size="sm" style={{textAlign: 'start', width:150 }}>{props.label}:</Heading>
+  <HStack m="4" space={2} justifyContent="flex-start" alignItems="center">
+    <Heading size="sm" style={{textAlign: 'left', width:150 }}>{props.label}:</Heading>
     <Box style={{flex:1}} >
   {props.content ? <Text>{props.content}</Text> : <ActivityIndicator style={appStyles.appFieldLoading} color={spinnerColor}/> }
 
