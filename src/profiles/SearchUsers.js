@@ -11,8 +11,15 @@ import debounce from 'lodash.debounce';
 import ProfileListItem from "./components/ProfileListItem";
 import ProfileFooter from "./components/ProfileFooter";
 
+import { useIsFocused } from '@react-navigation/native';
+
 
 const SearchUsers = ({ route, navigation }) => {
+  const isFocused = useIsFocused();
+  
+  useEffect(() => {
+    isFocused && loadPage()
+  },[isFocused]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [users,setUsers] = useState([]);
@@ -20,7 +27,7 @@ const SearchUsers = ({ route, navigation }) => {
   const [errors, setErrors] = useState({})
 
 
-  useEffect(() => {
+  const loadPage = () => {
     Auth.load(() => {
       axios.get('search/profile').then(({data}) => {
         setUsers(data.data);
@@ -30,7 +37,7 @@ const SearchUsers = ({ route, navigation }) => {
         onAuthFail(error,navigation);
       });
     })
-  },[])
+  }
 
   const debSearchUsers = useCallback(debounce(query => {
     searchUsers(query);

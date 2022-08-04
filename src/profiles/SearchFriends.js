@@ -10,19 +10,25 @@ import { NativeBaseProvider, VStack, Box, Divider, Heading, Stack, HStack } from
 import debounce from 'lodash.debounce';
 import FriendListItem from "./components/FriendListItem";
 // import FriendFooter from "./components/FriendFooter";
+import { useIsFocused } from '@react-navigation/native';
 
 
 const SearchFriends = ({ route, navigation }) => {
+  const isFocused = useIsFocused();
+  
+  useEffect(() => {
+    isFocused && loadPage()
+  },[isFocused]);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [friends,setFriends] = useState([{name:"test",id:234,email:"nick@gmail.com"}]);
+  const [friends,setFriends] = useState([]);
 
   const [errors, setErrors] = useState({})
 
 
-  useEffect(() => {
+  const loadPage = () => {
     Auth.load(() => {
-      axios.get('search/friends').then(({data}) => {
+      axios.get('search/friend').then(({data}) => {
         setFriends(data.data);
 
       }).catch((error) => {
@@ -30,7 +36,7 @@ const SearchFriends = ({ route, navigation }) => {
         onAuthFail(error,navigation);
       });
     })
-  },[])
+  }
 
   const debSearchFriends = useCallback(debounce(query => {
     SearchFriends(query);

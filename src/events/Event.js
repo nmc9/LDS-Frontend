@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Button, TextInput, Pressable,ScrollView,FlatList } from 'react-native'
+import { useIsFocused } from '@react-navigation/native';
 import appStyles, {appPadding,appMargin,primaryColor} from '../appStyles'
 import AppField from '../components/AppField'
 import AppInput from '../components/AppInput'
@@ -8,7 +9,10 @@ import UserinvitedListItem from "../invitations/components/UserinvitedListItem";
 import UserInvitedHeader from "../invitations/components/UserInvitedHeader";
 
 const Event = ({ route, navigation }) => {
-
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    isFocused && loadEvents()
+  },[isFocused]);
 
   const { eventId } = route.params;
 
@@ -20,6 +24,11 @@ const Event = ({ route, navigation }) => {
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
+    loadEvents();
+
+  },[])
+
+  const loadEvents = () => {
     Auth.load(() => {
       axios.get('event/' + eventId).then(({data}) => {
         setEvent(data.data);
@@ -29,9 +38,7 @@ const Event = ({ route, navigation }) => {
         onAuthFail(error,navigation);
       });
     })
-
-
-  },[])
+  }
 
   const onAuthFail = (error,navigation) => {
     if(error?.response?.status == 401){

@@ -6,9 +6,15 @@ import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
 import UserinvitedListItem from "../invitations/components/UserinvitedListItem";
 import UserInvitedHeader from "../invitations/components/UserInvitedHeader";
+import { useIsFocused } from '@react-navigation/native';
+
 
 const Bringable = ({ route, navigation }) => {
-
+  const isFocused = useIsFocused();
+  
+  useEffect(() => {
+    isFocused && loadPage()
+  },[isFocused]);
 
   const { BringableId } = route.params;
 
@@ -19,7 +25,7 @@ const Bringable = ({ route, navigation }) => {
 
   const [errors, setErrors] = useState({})
 
-  useEffect(() => {
+  const loadPage = () => {
     Auth.load(() => {
       axios.get('Bringable/' + BringableId).then(({data}) => {
         setBringable(data.data);
@@ -29,9 +35,7 @@ const Bringable = ({ route, navigation }) => {
         onAuthFail(error,navigation);
       });
     })
-
-
-  },[])
+  }
 
   const onAuthFail = (error,navigation) => {
     if(error?.response?.status == 401){

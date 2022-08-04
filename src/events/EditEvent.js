@@ -6,9 +6,15 @@ import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
 
 import { FormControl, Heading } from 'native-base';
+import { useIsFocused } from '@react-navigation/native';
 
 
 const EditEvent = ({ route, navigation }) => {
+  const isFocused = useIsFocused();
+  
+  useEffect(() => {
+    isFocused && loadPage()
+  },[isFocused]);
 
   const data = {
     id:-1,
@@ -26,7 +32,7 @@ const EditEvent = ({ route, navigation }) => {
   const { eventId } = route.params;
 
 
-  useEffect(() => {
+  const loadPage = () => {
     Auth.load(() => {
       axios.get('event/' + eventId).then(({data}) => {
         setEvent(data.data);
@@ -39,7 +45,7 @@ const EditEvent = ({ route, navigation }) => {
     })
 
 
-  },[])
+  }
 
   const onAuthFail = (error,navigation) => {
     if(error?.response?.status == 401){

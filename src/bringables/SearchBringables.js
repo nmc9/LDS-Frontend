@@ -11,9 +11,16 @@ import debounce from 'lodash.debounce';
 import BringableListItem from "./components/BringableListItem";
 import BringableFooter from "./components/BringableFooter";
 import BringableHeader from "./components/BringableHeader";
+import { useIsFocused } from '@react-navigation/native';
 
 
 const SearchBringable = ({ route, navigation }) => {
+  const isFocused = useIsFocused();
+  
+  useEffect(() => {
+    isFocused && loadPage()
+  },[isFocused]);
+
 
   const [searchTerm, setSearchTerm] = useState("");
   const [bringable,setBringable] = useState([]);
@@ -46,11 +53,11 @@ const SearchBringable = ({ route, navigation }) => {
   const [errors, setErrors] = useState({})
 
 
-  useEffect(() => {
+  const loadPage = () => {
     Auth.load(() => {
       searchAllBringables(null);
     })
-  },[])
+  }
 
   const debSearchBringable = useCallback(debounce(query => {
     if(assigned){

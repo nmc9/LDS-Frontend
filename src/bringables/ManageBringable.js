@@ -11,6 +11,7 @@ import debounce from 'lodash.debounce';
 import BringableListItem from "./components/BringableListItem";
 import BringableFooter from "./components/BringableFooter";
 import BringableHeader from "./components/BringableHeader";
+import { useIsFocused } from '@react-navigation/native';
 
 
 const ManageBringable = ({ route, navigation }) => {

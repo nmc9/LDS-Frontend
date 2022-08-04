@@ -5,7 +5,8 @@ import AppField from '../components/AppField'
 import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
 import SearchBar from "../components/SearchBar";
-// 
+import { useIsFocused } from '@react-navigation/native';
+
 import { NativeBaseProvider, VStack, Box, Divider, Heading, Stack, HStack } from "native-base";
 import debounce from 'lodash.debounce';
 import EventListItem from "./components/EventListItem";
@@ -13,14 +14,18 @@ import EventFooter from "./components/EventFooter";
 
 
 const SearchEvents = ({ route, navigation }) => {
+  const isFocused = useIsFocused();
+  
+  useEffect(() => {
+    isFocused && loadPage()
+  },[isFocused]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [events,setEvents] = useState([]);
 
   const [errors, setErrors] = useState({})
 
-
-  useEffect(() => {
+  const loadPage = () => {
     Auth.load(() => {
       axios.get('event').then(({data}) => {
         setEvents(data.data);
@@ -30,7 +35,7 @@ const SearchEvents = ({ route, navigation }) => {
         onAuthFail(error,navigation);
       });
     })
-  },[])
+  }
 
   const debSearchEvents = useCallback(debounce(query => {
     SearchEvents(query);
