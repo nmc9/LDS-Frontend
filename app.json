@@ -2,14 +2,16 @@
   "expo": {
     "name": "LetsDoStuff",
     "slug": "letsdostuff",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "icon": "./assets/appstore.png",
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
       "package": "com.ldsapp",
-      "versionCode": 1
+      "versionCode": 3,
+      "permissions": ["READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE","WRITE_SETTINGS"],
+      "blockedPermissions": ["READ_CALL_LOG","WRITE_CALL_LOG", "PROCESS_OUTGOING_CALLS",]
     }
   }
 }

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View,ScrollView, Button, TextInput, Pressable, Platform } from 'react-native'
-import appStyles from '../appStyles'
+import appStyles, {appPadding,appMargin,primaryColor} from '../appStyles'
 import AppButton from '../components/AppButton'
 import AppInput from '../components/AppInput'
 import AppField from '../components/AppField'
+import { Stack,Divider } from "native-base";
 
 import CrossPlatformDatePicker from "../components/CrossPlatformDatePicker"
 
@@ -54,6 +55,23 @@ const Register = ({ route, navigation }) => {
   const goToLogin = () => {
     navigation.navigate('Login')
   }
+
+  const setForAll = () => {
+    setMonday(Sunday);
+    setTuesday(Sunday);
+    setWednesday(Sunday);
+    setThursday(Sunday);
+    setFriday(Sunday);
+    setSaturday(Sunday); 
+  }
+
+  const setForWeekday = () => {
+    setTuesday(Monday);
+    setWednesday(Monday);
+    setThursday(Monday);
+    setFriday(Monday);
+  }
+
 
   const onSubmit = () => {
     let _form = form;
@@ -134,91 +152,144 @@ const Register = ({ route, navigation }) => {
     ></AppInput>
 
 
-    <View style={registerStyles.availableItem}>
-    <View>
+
+    <Stack style={registerStyles.availableItem} direction={
+      { base:"column",
+      md:"row"}
+    }>
+    <Stack>
     <AppField label="Sunday" content={getLabelText(Sunday.start,Sunday.end)}></AppField>
-    </View>
-    <View style={registerStyles.availableItemPickers}>
+    </Stack>
+    <Stack direction="column" style={registerStyles.availableItemPickers}>
 
     <CrossPlatformDatePicker onConfirm={(time) => setSunday({ ...Sunday, start: time }) } content="Start"></CrossPlatformDatePicker>
     <CrossPlatformDatePicker onConfirm={(time) => setSunday({ ...Sunday, end: time }) } content="End"></CrossPlatformDatePicker>
-    </View>
-    </View>
+    </Stack>
+        <AppButton content="Set For All" onPress={() => setForAll()}></AppButton>
 
+    </Stack>
 
-    <View style={registerStyles.availableItem}>
-    <View>
+    <Divider my="2" style={{    borderBottomWidth:2,
+    borderColor:primaryColor}}/>
+
+    <Stack style={registerStyles.availableItem} direction={
+      { base:"column",
+      md:"row"}
+    }>
+    <Stack>
     <AppField label="Monday" content={getLabelText(Monday.start,Monday.end)}></AppField>
-    </View>
-    <View style={registerStyles.availableItemPickers}>
+    </Stack>
+    <Stack style={registerStyles.availableItemPickers}>
 
     <CrossPlatformDatePicker onConfirm={(time) => setMonday({ ...Monday, start: time }) } content="Start"></CrossPlatformDatePicker>
     <CrossPlatformDatePicker onConfirm={(time) => setMonday({ ...Monday, end: time }) } content="End"></CrossPlatformDatePicker>
-    </View>
-    </View>
+
+    </Stack>
+        <AppButton content="Set All Weekdays" onPress={() => setForWeekday()}></AppButton>
+
+    </Stack>
+
+    <Divider my="2" style={{    borderBottomWidth:2,
+    borderColor:primaryColor}}/>
 
 
 
 
-    <View style={registerStyles.availableItem}>
-    <View>
+
+    <Stack style={registerStyles.availableItem} direction={
+      { base:"column",
+      md:"row"}
+    }>
+    <Stack>
     <AppField label="Tuesday" content={getLabelText(Tuesday.start,Tuesday.end)}></AppField>
-    </View>
-    <View style={registerStyles.availableItemPickers}>
+    </Stack>
+    <Stack style={registerStyles.availableItemPickers}>
 
     <CrossPlatformDatePicker onConfirm={(time) => setTuesday({ ...Tuesday, start: time }) } content="Start"></CrossPlatformDatePicker>
     <CrossPlatformDatePicker onConfirm={(time) => setTuesday({ ...Tuesday, end: time }) } content="End"></CrossPlatformDatePicker>
-    </View>
-    </View>
+    </Stack>
+    </Stack>
 
-    <View style={registerStyles.availableItem}>
-    <View>
+    <Divider my="2" style={{    borderBottomWidth:2,
+    borderColor:primaryColor}}/>
+
+
+    <Stack style={registerStyles.availableItem} direction={
+      { base:"column",
+      md:"row"}
+    }>
+    <Stack>
     <AppField label="Wednesday" content={getLabelText(Wednesday.start,Wednesday.end)}></AppField>
-    </View>
-    <View style={registerStyles.availableItemPickers}>
+    </Stack>
+    <Stack style={registerStyles.availableItemPickers}>
 
     <CrossPlatformDatePicker onConfirm={(time) => setWednesday({ ...Wednesday, start: time }) } content="Start"></CrossPlatformDatePicker>
     <CrossPlatformDatePicker onConfirm={(time) => setWednesday({ ...Wednesday, end: time }) } content="End"></CrossPlatformDatePicker>
-    </View>
-    </View>
+    </Stack>
+    </Stack>
+
+    <Divider my="2" style={{    borderBottomWidth:2,
+    borderColor:primaryColor}}/>
 
 
-    <View style={registerStyles.availableItem}>
-    <View>
+
+    <Stack style={registerStyles.availableItem} direction={
+      { base:"column",
+      md:"row"}
+    }>
+    <Stack>
     <AppField label="Thursday" content={getLabelText(Thursday.start,Thursday.end)}></AppField>
-    </View>
-    <View style={registerStyles.availableItemPickers}>
+    </Stack>
+    <Stack style={registerStyles.availableItemPickers}>
 
     <CrossPlatformDatePicker onConfirm={(time) => setThursday({ ...Thursday, start: time }) } content="Start"></CrossPlatformDatePicker>
     <CrossPlatformDatePicker onConfirm={(time) => setThursday({ ...Thursday, end: time }) } content="End"></CrossPlatformDatePicker>
-    </View>
-    </View>
+    </Stack>
+    </Stack>
+
+    <Divider my="2" style={{    borderBottomWidth:2,
+    borderColor:primaryColor}}/>
 
 
-    <View style={registerStyles.availableItem}>
-    <View>
+
+    <Stack style={registerStyles.availableItem} direction={
+      { base:"column",
+      md:"row"}
+    }>
+    <Stack>
     <AppField label="Friday" content={getLabelText(Friday.start,Friday.end)}></AppField>
-    </View>
-    <View style={registerStyles.availableItemPickers}>
+    </Stack>
+    <Stack style={registerStyles.availableItemPickers}>
 
     <CrossPlatformDatePicker onConfirm={(time) => setFriday({ ...Friday, start: time }) } content="Start"></CrossPlatformDatePicker>
     <CrossPlatformDatePicker onConfirm={(time) => setFriday({ ...Friday, end: time }) } content="End"></CrossPlatformDatePicker>
-    </View>
-    </View>
+    </Stack>
+    </Stack>
+
+    <Divider my="2" style={{    borderBottomWidth:2,
+    borderColor:primaryColor}}/>
 
 
-    <View style={registerStyles.availableItem}>
-    <View>
+
+    <Stack style={registerStyles.availableItem} direction={
+      { base:"column",
+      md:"row"}
+    }>
+    <Stack>
     <AppField label="Saturday" content={getLabelText(Saturday.start,Saturday.end)}></AppField>
-    </View>
-    <View style={registerStyles.availableItemPickers}>
+    </Stack>
+    <Stack style={registerStyles.availableItemPickers}>
 
     <CrossPlatformDatePicker onConfirm={(time) => setSaturday({ ...Saturday, start: time }) } content="Start"></CrossPlatformDatePicker>
     <CrossPlatformDatePicker onConfirm={(time) => setSaturday({ ...Saturday, end: time }) } content="End"></CrossPlatformDatePicker>
-    </View>
-    </View>
+    </Stack>
+    </Stack>
 
-    <View style={registerStyles.buttonHolder}>
+    <Divider my="2" style={{    borderBottomWidth:2,
+    borderColor:primaryColor}}/>
+
+
+    <Stack style={registerStyles.buttonHolder}>
     <AppButton content="Clear" onPress={onClear}>
     </AppButton>
     <AppButton content="Register" onPress={onSubmit}>
@@ -227,7 +298,7 @@ const Register = ({ route, navigation }) => {
     <AppButton content="Login" onPress={goToLogin}>
     </AppButton>
 
-    </View>
+    </Stack>
     </ScrollView>
     )
 }
@@ -235,7 +306,7 @@ const Register = ({ route, navigation }) => {
 const registerStyles = StyleSheet.create({
 
   availableItem:{
-    flexDirection: "row",
+    // flexDirection: "row",
     alignItems: "center",
     // backgroundColor:'green',
     justifyContent: 'flex-start'
@@ -243,8 +314,12 @@ const registerStyles = StyleSheet.create({
   },
 
   availableItemPickers:{
-    flexDirection:'row',padding:2 ,justifyContent:'flex-start'
+    flexDirection:'row',
+    padding:2,
+    justifyContent:'flex-start'
   },
+
+
   container: {
     // flex: 1,
     backgroundColor: 'lightgrey',
