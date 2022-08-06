@@ -53,13 +53,26 @@ const SendInvitations = ({ route, navigation }) => {
     });
   }
 
+  const onAdd = (email) => {
+    console.log("onAdd");
+    console.log(email)
+    axios.post('event/' + eventId + '/invitation',{
+      emails: [email]
+      }).then(({data}) => {
+      alert("Invitations Sent");
+    }).catch((error) => {
+      alert(error);
+    });
+  }
+
+
 
   const renderInviteFriendListItem = ({ item }) => (
     <InviteFriendListItem eventId={eventId} user={item} navigation={navigation} onRemove={removeUser}></InviteFriendListItem>
     );
 
     const renderSendInvitationHeader = ({ item }) => (
-    <SendInvitationHeader eventId={eventId} onSearch={searchUsers} onSend={sendInvitations} navigation={navigation}></SendInvitationHeader>
+    <SendInvitationHeader eventId={eventId} onSearch={searchUsers} onSend={sendInvitations} onAdd={onAdd} navigation={navigation}></SendInvitationHeader>
     );
 
 
