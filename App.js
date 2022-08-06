@@ -55,13 +55,20 @@ export default function App () {
 
 
 
+
+
     <Stack.Screen
     name="Profile"
     component={Profile}
     // initialParams={{ user }}
     options={{ title: 'Profile' }}
     />
-
+        <Stack.Screen
+    name="ManageBrinable"
+    component={ManageBrinable}
+    // initialParams={{ user }}
+    options={{ title: 'Manage Bringables' }}
+    />   
 
     <Stack.Screen
     name="Login"

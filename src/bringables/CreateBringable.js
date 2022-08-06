@@ -5,7 +5,7 @@ import AppButton from '../components/AppButton'
 import AppInput from '../components/AppInput'
 import AppField from '../components/AppField'
 import { Select, Heading,HStack,VStack,Box,Switch } from 'native-base'
-
+import FriendDropdown from "./components/FriendDropdown"
 
 import CrossPlatformDatePicker from "../components/CrossPlatformDatePicker"
 
@@ -25,7 +25,6 @@ const CreateBringable = ({ route, navigation }) => {
   const [form, setForm] = useState(data)
   const [errors, setErrors] = useState({})
 
-  const [group, setGroup] = useState([]);
 
   const { event } = route.params;
 
@@ -40,27 +39,6 @@ const CreateBringable = ({ route, navigation }) => {
     setErrors({})
   }
 
-  useEffect(() => {
-    Auth.load(() => {
-
-      axiosGetGroup();
-    })
-  },[])
-
-  const axiosGetGroup = () => {
-    axios.get('event/' + event.id + '/accepted')
-    .then(({ data }) => {
-
-      Auth.getUser().then((user) => {
-        let users = data.data;
-        users.unshift(JSON.parse(user));
-        setGroup(users);
-      })
-
-    }).catch((error) => {
-      onErrors(error,setErrors);
-    })
-  }
 
   const onErrors = (error, setErrorCallback) => {
     const _errors = error?.response?.data?.errors
@@ -164,15 +142,8 @@ const CreateBringable = ({ route, navigation }) => {
 
 
 
-    <HStack m="4" space={2} justifyContent="flex-start" alignItems="center">
-      <Heading size="sm" style={{textAlign: 'left', width:150 }}>Assigned To:</Heading>
-      <Box style={{flex:1}} >
-        <Select selectedValue={assignedUser} minWidth="200" accessibilityLabel="Assign User" onValueChange={itemValue => { setAssignedUser(itemValue) }}>
-        <Select.Item label="Unassigned" value={"-1"} />
-          {group.map(r => <Select.Item key={r.id} label={r.email} value={r.id + ""} />)}
-        </Select>
-      </Box>
-    </HStack>        
+    <FriendDropdown event_id={event.id} onErrors={(error,setErrors) => {onErrors(error,setErrors)}} assignedUser={assignedUser} setAssignedUser={setAssignedUser}></FriendDropdown>
+   
 
 
     <View style={createBringableStyles.buttonHolder}>

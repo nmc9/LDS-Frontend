@@ -6,18 +6,35 @@ import AppInput from '../components/AppInput'
 import AppButton from '../components/AppButton'
 import SearchBar from "../components/SearchBar";
 // 
-import { NativeBaseProvider, VStack, Box, Divider, Heading, Stack, HStack } from "native-base";
+import { NativeBaseProvider, VStack, Box, Divider, Heading, Stack, HStack,Select } from "native-base";
 import debounce from 'lodash.debounce';
-import BringableListItem from "./components/BringableListItem";
+import BringableItemListItem from "./components/BringableItemListItem";
 import BringableFooter from "./components/BringableFooter";
-import BringableHeader from "./components/BringableHeader";
+import BringableItemHeader from "./components/BringableItemHeader";
 import { useIsFocused } from '@react-navigation/native';
 
 
 const ManageBringable = ({ route, navigation }) => {
+  const isFocused = useIsFocused();
+  
+  useEffect(() => {
+    isFocused && loadPage()
+  },[isFocused]);
+
+  const data = {
+    'notes':"",
+    'importance':4,
+  }
+
 
   const [searchTerm, setSearchTerm] = useState("");
   const [bringableItem,setBringableItem] = useState([]);
+  const [bringable,setBringable] = useState({});
+  const [form, setForm] = useState(data)
+  const [importance, setImportance] = useState("4");
+  const [errors, setErrors] = useState({})
+  const [group, setGroup] = useState([]);
+
 
   const event = {
     description: "sdfsdfsdfs",
@@ -29,63 +46,62 @@ const ManageBringable = ({ route, navigation }) => {
     start_datetime: "2022-01-01 10:10:10"
   } //route.params;
 
-  const bringable = {
-    'id' : 1,
-    'name' : "SOCKS",
-    'notes' : "ASD",
-    'importance' : 4,
-    'required_count' : 0,
-    'acquired_acount' : 0,
-    'acquired_all' : false,
-    'items' : []
-  } // route.bringable;
+  const BringableId  = 1;//route.params;
 
 
 
-  const [errors, setErrors] = useState({})
-
-
-  useEffect(() => {
+  const loadPage =() => {
     Auth.load(() => {
+      axiosGetGroup();
+      axios.get('event/' + event.id + '/bringable/' + BringableId).then(({data}) => {
+        setBringable(data.data);
+        setForm(data.data)
 
-      searchAllBringableItems(null);
+
+      }).catch((error) => {
+
+        onAuthFail(error,navigation);
+      });
     })
-  },[])
+  }
 
-  // const debManageBringable = useCallback(debounce(query => {
-  //   searchAllBringableItems(query);
-  // }, 400), [])
+  const clearAcquired = () => {
+    axios.post('bringable/clearaquired/' + bringable.id)
+    .then(({data}) => {
+      alert("Bringable Cleared");
+      loadPage();
+    }).catch((error) => {
+      onAuthFail(error,navigation);
+    });    
+  }
 
+  const updateBringable = () => {
+    let _form = {
+      name:form.name,
+      notes: form.notes === "" ? null : form.notes,
 
-  const searchAllBringableItems = (value) => {
-    let url = getSearchUrl(event.id,null,value,null);
-    axios.get(url).then(({data}) => {
-      setBringable(data.data);
+    };
+    axios.put('/bringable/' + BringableId, _form)
+    .then(({ data }) => {
+
+      navigation.navigate('SearchBringables',{
+        event: event
+      });
 
     }).catch((error) => {
+              alert(error);
 
-      onAuthFail(error,navigation);
-    });
+      onErrors(error,setErrors);
+    })
   }
 
-
-  const getSearchUrl = (event_id,user_id,value,acquired) => {
-    let base = 'event/' + event_id;
-    if(user_id){
-       base += '/user' + user_id;
+    const onErrors = (error, setErrorCallback) => {
+    const _errors = error?.response?.data?.errors
+    if (_errors) {
+      setErrorCallback(_errors)
     }
-    base += "/bringable";
-    if(value && acquired){
-      base += "?search=" + value + "&acquired=" + acquired
-    }else if(value){
-      base += "?search=" + value
-    }else if(acquired){
-      base += "?acquired=" + acquired
-    }
-
-    return base;
-
   }
+
 
   const onAuthFail = (error,navigation) => {
     if(error?.response?.status == 401){
@@ -94,41 +110,92 @@ const ManageBringable = ({ route, navigation }) => {
     }
   }
 
-  const handleChange = search => { setSearchTerm(search); debManageBringable(search) };
+  const axiosGetGroup = () => {
+    axios.get('event/' + event.id + '/accepted')
+    .then(({ data }) => {
 
+      Auth.getUser().then((user) => {
+        let users = data.data;
+        users.unshift(JSON.parse(user));
+        setGroup(users);
+      })
 
-  const renderBringableListItem = ({ item }) => (
-    <BringableListItem bringable={item} navigation={navigation}></BringableListItem>
+    }).catch((error) => {
+      onErrors(error,setErrors);
+    })
+  }
+
+  const deleteBringable = () => {
+    axios.delete('bringable/' + bringable.id)
+    .then(({data}) => {
+      alert("Bringable Deleted");
+      navigation.navigate('SearchBringables',{
+        event: event
+      });
+    }).catch((error) => {
+      onAuthFail(error,navigation);
+    });
+
+  }
+
+  const onRefresh = () => {
+    console.log("REFRESH LIST")
+    loadPage();
+  }
+
+  const renderBringableItemListItem = ({ item }) => (
+    <BringableItemListItem group={group} onRefresh={() => {onRefresh() }} event={event} bringableItem={item} navigation={navigation}></BringableItemListItem>
     );
 
-  const renderBringableFooter = ({ item }) => (
-    <BringableFooter data={{}} navigation={navigation}></BringableFooter>
-    );
-
-  const renderBringableHeader = ({ item }) => (
-    <BringableHeader data={{}} navigation={navigation}></BringableHeader>
+  const renderBringableItemHeader = ({ item }) => (
+    <BringableItemHeader event={event} bringable={bringable} data={{}} navigation={navigation}></BringableItemHeader>
     );
 
   return (
     <ScrollView style={ManageBringableStyles.container}>
 
-    <VStack space={1} mt="2" alignItems="center">
+    <VStack space={1} mt="2">
     <Heading>Bringables for { event.name }</Heading>
     </VStack>
-    <HStack alignItems="center" >
+    <AppField label="Bringable Name" content={bringable?.name}></AppField>
+
+
+    <AppInput
+    error={errors.notes}
+    onChangeText={(e) => setForm({ ...form, notes: e })}
+    value={form.notes}
+    placeholder="Bringable Notes"
+    ></AppInput>
+
+
+    <HStack m="4" space={2} justifyContent="flex-start" alignItems="center">
+      <Heading size="sm" style={{textAlign: 'left', width:150 }}>Importance:</Heading>
       <Box style={{flex:1}} >
-      <SearchBar placeholder="Search Bringable" value={searchTerm} onChangeText={handleChange}></SearchBar>
+      <Select m="2" selectedValue={importance} minWidth="200" accessibilityLabel="Assign User" onValueChange={itemValue => { setImportance(itemValue)}}>
+        <Select.Item label="Required" value="1"/>
+        <Select.Item label="Important" value="2"/>
+        <Select.Item label="Useful" value="3"/>
+        <Select.Item label="Optional" value="4"/>
+
+      </Select>
       </Box>
-      <AppButton content="Create Bringable" onPress={ () => {navigation.navigate("CreateBringable");}  }></AppButton>
-      
-    </HStack>
-    
+    </HStack>   
+
+
+<HStack alignItems="center" justifyContent="center">
+      <AppButton content="Save Changes" onPress={ () => {updateBringable()}  }></AppButton>
+
+      <AppButton content="Completely Delete" onPress={ () => {deleteBringable()}  }></AppButton>
+</HStack>
+<HStack alignItems="center" justifyContent="center">
+
+      <AppButton content="Clear all items" onPress={ () => {clearAcquired()}  }></AppButton>
+</HStack>    
     <FlatList
-    data={bringable}
-    renderItem={renderBringableListItem}
-    keyExtractor={(bringable) => bringable.id}
-    ListFooterComponent={renderBringableFooter}
-      ListHeaderComponent={renderBringableHeader}
+    data={bringable.items}
+    renderItem={renderBringableItemListItem}
+    keyExtractor={(bringableItem) => bringableItem.id}
+    ListHeaderComponent={renderBringableItemHeader}
 
     />
 
