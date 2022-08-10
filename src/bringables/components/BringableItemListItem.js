@@ -30,7 +30,6 @@ const BringableItemListItem = ({ event,bringableItem, onRefresh, group, navigati
     setRequired(bringableItem.required);
     setAcquired(bringableItem.acquired);
 
-    console.log(bringableItem.assigned ? bringableItem.assigned.id + "" : "-1");
     setAssignedUser(bringableItem.assigned ? bringableItem.assigned.id + "" : "-1")
 
   },[bringableItem]);

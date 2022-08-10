@@ -54,8 +54,6 @@ const SendInvitations = ({ route, navigation }) => {
   }
 
   const onAdd = (email) => {
-    console.log("onAdd");
-    console.log(email)
     axios.post('event/' + eventId + '/invitation',{
       emails: [email]
       }).then(({data}) => {

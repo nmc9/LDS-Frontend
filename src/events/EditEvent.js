@@ -66,9 +66,6 @@ const EditEvent = ({ route, navigation }) => {
     axios.put('event/' + form.id, form)
     .then(({ data }) => {
 
-      console.log(data);
-      console.log(data.data.id)
-
       navigation.navigate('Event',{
         eventId: data.data.id,
       });

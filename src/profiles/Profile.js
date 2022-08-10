@@ -32,7 +32,6 @@ const Profile = ({ route, navigation }) => {
       });
 
       axios.get('availability').then(({data}) => {
-        console.log(data.data?.sunday);
 
         data.data?.sunday ? setSunday(data.data?.sunday) : null;
         data.data?.monday ? setMonday(data.data?.monday) : null;
@@ -44,7 +43,6 @@ const Profile = ({ route, navigation }) => {
 
 
       }).catch((error) => {
-        console.log(error)
       });
     })
 
@@ -66,7 +64,6 @@ const Profile = ({ route, navigation }) => {
   }
 
   const getLabelText = (start,end,day = "A") =>{
-    console.log(start,end,day);
     let formatted = formatTimeRange(start,end);
     if(formatted){
       return formatted;

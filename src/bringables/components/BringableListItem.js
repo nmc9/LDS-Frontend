@@ -18,7 +18,6 @@ const BringableListItem = ({ bringable, event, navigation }) => {
   }
 
   const goToManageBringablePage = () => {
-    console.log("ASD BRIGNALBE")
     navigation.navigate("ManageBrinable",{
       BringableId: bringable.id,
       event: event,

@@ -14,8 +14,6 @@ const EventFooter = ({navigation}) => {
 
   const [wasCreated,setWasCreated] = useState(false);
 
-console.log("navagtion");
-console.log(navigation);
   const goToCreateEvent = () => {
       navigation.navigate("CreateEvent");
   }

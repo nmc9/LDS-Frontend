@@ -11,7 +11,6 @@ const FriendListItem = ({ username, email, removeFriend, id }) => {
   const [wasAdded,setWasAdded] = useState(false);
 
   const deleteFriendUser = () => {
-    console.log(id);
     removeFriend(id);
   }
 

@@ -139,7 +139,6 @@ const ManageBringable = ({ route, navigation }) => {
   }
 
   const onRefresh = () => {
-    console.log("REFRESH LIST")
     loadPage();
   }
 
