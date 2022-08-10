@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 
-axios.defaults.baseURL = "https:/api.lds-app.com/api/"; //process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = "https://api.lds-app.com/api/";
 // axios.defaults.headers.common['Authorization'] = "Bearer" + null;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.headers.common.Accept = 'application/json'
