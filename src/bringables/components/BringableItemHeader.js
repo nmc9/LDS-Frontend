@@ -18,21 +18,25 @@ const BringableItemHeader = ({event, bringable, navigation}) => {
 
   const [assignedUser,setAssignedUser] = useState("-1");
   const [importance, setImportance] = useState("4");
-  const [form, setForm] = useState(data)
+  const [form, setForm] = useState(data);
 
   const [errors, setErrors] = useState({})
 
   const addBringableItem = () => {
     let _data = {
-      required: bringable.required_count >= 0 ? data.required : -1,
-      acquired: data.acquired,
-      'assigned_id': assignedUser,
+      required: bringable.required_count >= 0 ? form.required : -1,
+      acquired: form.acquired,
+      'assigned_id': assignedUser == "-1" ? null : assignedUser,
     }
     axios.post('bringable/' + bringable.id + '/items',_data)
     .then(({data}) => {
       alert("Added Bringable Item");
 
     }).catch((error) => {
+      const _errors = error?.response?.data?.errors
+      if (_errors) {
+        setErrors(_errors)
+      }
       onAuthFail(error,navigation);
     });
 

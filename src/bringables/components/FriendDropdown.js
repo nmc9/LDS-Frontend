@@ -14,11 +14,11 @@ const FriendDropdown = ({event_id, presetGroup,onErrors, assignedUser, setAssign
 
   useEffect(() => {
     Auth.load(() => {
-      if(presetGroup){
-        setGroup(presetGroup)
-      }else{
+      // if(presetGroup){
+        // setGroup(presetGroup)
+      // }else{
         axiosGetGroup();
-      }
+      // }
     })
   },[])
 

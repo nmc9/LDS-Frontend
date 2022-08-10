@@ -111,6 +111,7 @@ const Register = ({ route, navigation }) => {
   return (
     <ScrollView style={registerStyles.container}>
 
+
     <AppInput
     error={errors.name}
     onChangeText={(e) => setForm({ ...form, name: e })}
@@ -151,11 +152,9 @@ const Register = ({ route, navigation }) => {
     textContentType="telephoneNumber"
     ></AppInput>
 
-
-
     <Stack style={registerStyles.availableItem} direction={
       { base:"column",
-      md:"row"}
+      lg:"row"}
     }>
     <Stack>
     <AppField label="Sunday" content={getLabelText(Sunday.start,Sunday.end)}></AppField>
@@ -174,7 +173,7 @@ const Register = ({ route, navigation }) => {
 
     <Stack style={registerStyles.availableItem} direction={
       { base:"column",
-      md:"row"}
+      lg:"row"}
     }>
     <Stack>
     <AppField label="Monday" content={getLabelText(Monday.start,Monday.end)}></AppField>
@@ -198,7 +197,7 @@ const Register = ({ route, navigation }) => {
 
     <Stack style={registerStyles.availableItem} direction={
       { base:"column",
-      md:"row"}
+      lg:"row"}
     }>
     <Stack>
     <AppField label="Tuesday" content={getLabelText(Tuesday.start,Tuesday.end)}></AppField>
@@ -216,7 +215,7 @@ const Register = ({ route, navigation }) => {
 
     <Stack style={registerStyles.availableItem} direction={
       { base:"column",
-      md:"row"}
+      lg:"row"}
     }>
     <Stack>
     <AppField label="Wednesday" content={getLabelText(Wednesday.start,Wednesday.end)}></AppField>
@@ -235,7 +234,7 @@ const Register = ({ route, navigation }) => {
 
     <Stack style={registerStyles.availableItem} direction={
       { base:"column",
-      md:"row"}
+      lg:"row"}
     }>
     <Stack>
     <AppField label="Thursday" content={getLabelText(Thursday.start,Thursday.end)}></AppField>
@@ -254,7 +253,7 @@ const Register = ({ route, navigation }) => {
 
     <Stack style={registerStyles.availableItem} direction={
       { base:"column",
-      md:"row"}
+      lg:"row"}
     }>
     <Stack>
     <AppField label="Friday" content={getLabelText(Friday.start,Friday.end)}></AppField>
@@ -273,7 +272,7 @@ const Register = ({ route, navigation }) => {
 
     <Stack style={registerStyles.availableItem} direction={
       { base:"column",
-      md:"row"}
+      lg:"row"}
     }>
     <Stack>
     <AppField label="Saturday" content={getLabelText(Saturday.start,Saturday.end)}></AppField>

@@ -15,10 +15,10 @@ const AppField = (props) => {
 
   <HStack m="4" space={2} justifyContent="flex-start" alignItems="center">
     <Heading size="sm" style={{textAlign: 'left', width:150 }}>{props.label}:</Heading>
-    <Box style={{flex:1}} >
+    <HStack >
   {props.content ? <Text>{props.content}</Text> : <ActivityIndicator style={appStyles.appFieldLoading} color={spinnerColor}/> }
 
-    </Box>
+    </HStack>
   </HStack>     
 
 

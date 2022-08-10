@@ -7,7 +7,7 @@ import AppButton from "../../components/AppButton";
 import appStyles, {appPadding, appMargin, primaryColor} from '../../appStyles'
 
 
-const BringableListItem = ({ bringable, navigation }) => {
+const BringableListItem = ({ bringable, event, navigation }) => {
 
   const [wasAdded,setWasAdded] = useState(false);
 
@@ -18,8 +18,10 @@ const BringableListItem = ({ bringable, navigation }) => {
   }
 
   const goToManageBringablePage = () => {
+    console.log("ASD BRIGNALBE")
     navigation.navigate("ManageBrinable",{
       BringableId: bringable.id,
+      event: event,
     });
   }
 

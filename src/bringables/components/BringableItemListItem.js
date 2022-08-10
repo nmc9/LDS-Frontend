@@ -14,12 +14,26 @@ const BringableItemListItem = ({ event,bringableItem, onRefresh, group, navigati
   const data = {
     'required': 0,
     'acquired': 0,
+    'assigned_id':"-1",
   }
   const [form, setForm] = useState(data)
 
   const [errors, setErrors] = useState({})
 
-  const [assignedUser,setAssignedUser] = useState("-1");
+  const [assignedUser,setAssignedUser] = useState(-1);
+  const [required, setRequired] = useState(0)
+  const [acquired, setAcquired] = useState(0)
+
+
+  useEffect(() => {
+
+    setRequired(bringableItem.required);
+    setAcquired(bringableItem.acquired);
+
+    console.log(bringableItem.assigned ? bringableItem.assigned.id + "" : "-1");
+    setAssignedUser(bringableItem.assigned ? bringableItem.assigned.id + "" : "-1")
+
+  },[bringableItem]);
 
   const goToBringablePage = () => {
     navigation.navigate("Bringable",{
@@ -50,8 +64,8 @@ const BringableItemListItem = ({ event,bringableItem, onRefresh, group, navigati
 
   const updateItems = () => {
     let _data = {
-      required: data.required,
-      acquired: data.acquired,
+      required: required,
+      acquired: acquired,
     }
     axios.put('bringableitem/' + bringableItem.id,_data)
     .then(({data}) => {
@@ -75,9 +89,16 @@ const BringableItemListItem = ({ event,bringableItem, onRefresh, group, navigati
   }
 
   const reassignItem = (keep) => {
-    axios.post('bringableitem/' + bringableItem.id,{
+    let ass_user = assignedUser;
+    if(ass_user === "-1"){
+      ass_user = null;
+    }
+    if(ass_user === -1){
+      ass_user = null;
+    }
+    axios.post('bringableitem/reassign/' + bringableItem.id,{
       keep:keep,
-      assigned_id:assignedUser 
+      assigned_id:ass_user
       })
     .then(({data}) => {
       alert("Bringable Item Updated");
@@ -105,8 +126,7 @@ const BringableItemListItem = ({ event,bringableItem, onRefresh, group, navigati
   return (
     <Box p="3">
       <Box p="3" rounded="lg" overflow="hidden" borderColor="coolGray.500" borderWidth="2">
-        
-      <Text>{JSON.stringify(group)}</Text>
+        <Text>{ assignedUser + ":" + required + ":" + acquired}</Text>
 
         <FriendDropdown presetGroup={group} onErrors={(error,setErrors) => {onErrors(error,setErrors)}} event_id={event.id} assignedUser={assignedUser} setAssignedUser={setAssignedUser}></FriendDropdown>
 
@@ -117,11 +137,11 @@ const BringableItemListItem = ({ event,bringableItem, onRefresh, group, navigati
 
 
     <VStack space={0}>
-      {form.required >= 0 ? 
+      {required >= 0 ? 
       <AppInput
       error={errors.required}
-      onChangeText={(e) => setForm({ ...form, required: e })}
-      value={form.required}
+      onChangeText={(e) => setRequired(e)}
+      value={required}
       placeholder="Number of Required"
       ></AppInput>
       :
@@ -131,8 +151,8 @@ const BringableItemListItem = ({ event,bringableItem, onRefresh, group, navigati
 
             <AppInput
     error={errors.acquired}
-    onChangeText={(e) => setForm({ ...form, acquired: e })}
-    value={form.acquired}
+    onChangeText={(e) => setAcquired(e)}
+    value={acquired}
     placeholder="Number already Acquired"
     ></AppInput>
 
@@ -142,7 +162,6 @@ const BringableItemListItem = ({ event,bringableItem, onRefresh, group, navigati
 
         </HStack>
 
-        <Heading>{ JSON.stringify(bringableItem )}</Heading>
       </Box>
     </Box>
     )

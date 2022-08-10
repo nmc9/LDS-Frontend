@@ -13,12 +13,12 @@ const CreateBringable = ({ route, navigation }) => {
   const data = {
     'name':'',
     'notes':"",
-    'importance':4,
+    'importance':"4",
     'assigned_id':null,
-    'required': 0,
-    'acquired': 0,
+    'required': "0",
+    'acquired': "0",
   }
-  const [requriedOn,setRequiredOn] = useState(0); 
+  const [requriedOn,setRequiredOn] = useState("0"); 
 
   const [assignedUser,setAssignedUser] = useState("-1");
   const [importance, setImportance] = useState("4");
@@ -104,7 +104,7 @@ const CreateBringable = ({ route, navigation }) => {
     <HStack m="4" space={2} justifyContent="flex-start" alignItems="center">
       <Heading size="sm" style={{textAlign: 'left', width:150 }}>Importance:</Heading>
       <Box style={{flex:1}} >
-      <Select m="2" selectedValue={importance} minWidth="200" accessibilityLabel="Assign User" onValueChange={itemValue => { setImportance(itemValue)}}>
+      <Select m="2"  minWidth="200" accessibilityLabel="Assign User" onValueChange={itemValue => { setImportance(itemValue)}}>
         <Select.Item label="Required" value="1"/>
         <Select.Item label="Important" value="2"/>
         <Select.Item label="Useful" value="3"/>

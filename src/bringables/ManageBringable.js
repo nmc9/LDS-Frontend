@@ -35,18 +35,18 @@ const ManageBringable = ({ route, navigation }) => {
   const [errors, setErrors] = useState({})
   const [group, setGroup] = useState([]);
 
+  const {event, BringableId} = route.params
+  // const event = {
+  //   description: "sdfsdfsdfs",
+  //   end_datetime: "2022-01-01 10:10:10",
+  //   id: 21,
+  //   location: "fdsdfsdfs",
+  //   name: "sf",
+  //   owner_id: 27,
+  //   start_datetime: "2022-01-01 10:10:10"
+  // } //route.params;
 
-  const event = {
-    description: "sdfsdfsdfs",
-    end_datetime: "2022-01-01 10:10:10",
-    id: 21,
-    location: "fdsdfsdfs",
-    name: "sf",
-    owner_id: 27,
-    start_datetime: "2022-01-01 10:10:10"
-  } //route.params;
-
-  const BringableId  = 1;//route.params;
+  // const BringableId  = 1;//route.params;
 
 
 
@@ -77,9 +77,9 @@ const ManageBringable = ({ route, navigation }) => {
 
   const updateBringable = () => {
     let _form = {
-      name:form.name,
+      //name:form.name,
       notes: form.notes === "" ? null : form.notes,
-
+      importance: importance,
     };
     axios.put('/bringable/' + BringableId, _form)
     .then(({ data }) => {

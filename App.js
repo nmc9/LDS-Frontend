@@ -63,12 +63,7 @@ export default function App () {
     // initialParams={{ user }}
     options={{ title: 'Profile' }}
     />
-        <Stack.Screen
-    name="ManageBrinable"
-    component={ManageBrinable}
-    // initialParams={{ user }}
-    options={{ title: 'Manage Bringables' }}
-    />   
+  
 
     <Stack.Screen
     name="Login"
@@ -120,6 +115,13 @@ export default function App () {
     // initialParams={{ user }}
     options={{ title: 'Search Bringables' }}
     />   
+
+           <Stack.Screen
+    name="ManageBrinable"
+    component={ManageBrinable}
+    // initialParams={{ user }}
+    options={{ title: 'Manage Bringables' }}
+    />  
 
 
     <Stack.Screen

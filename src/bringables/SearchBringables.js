@@ -135,7 +135,7 @@ const handleChange = search => {
 
 
 const renderBringableListItem = ({ item }) => (
-  <BringableListItem bringable={item} navigation={navigation}></BringableListItem>
+  <BringableListItem event={event} bringable={item} navigation={navigation}></BringableListItem>
   );
 
 const renderBringableFooter = ({ item }) => (
