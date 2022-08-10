@@ -38,7 +38,7 @@ const Login = ({ route, navigation }) => {
   }
 
   const onSubmit = () => {
-    axios.post('login', form)
+    axios.post('/login', form)
     .then(({ data }) => {
 
       Auth.set(data.user,data.token);

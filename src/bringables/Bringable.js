@@ -70,7 +70,7 @@ const Bringable = ({ route, navigation }) => {
   }
 
   const searchAccepted = () => {
-      axios.get('Bringable/' + BringableId + '/accepted').then(({data}) => {
+      axios.get('/bringable/' + BringableId + '/accepted').then(({data}) => {
         setInvitedUsers(data.data);
 
       }).catch((error) => {
@@ -80,7 +80,7 @@ const Bringable = ({ route, navigation }) => {
 
   }
   const searchPending = () => {
-      axios.get('Bringable/' + BringableId + '/pending').then(({data}) => {
+      axios.get('/bringable/' + BringableId + '/pending').then(({data}) => {
         setInvitedUsers(data.data);
 
       }).catch((error) => {
